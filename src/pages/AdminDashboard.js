@@ -12,7 +12,7 @@ import {
   LayoutDashboard, Users, MessageSquare, MapPin, Package,
   CheckCircle, RefreshCw, Globe, LogIn, ArrowRight,
   Mail, Phone, Plus, Trash2, Star, Clock, Tag, X, Edit2,
-  Eye, Calendar, Shield
+  Eye, Calendar, Shield, TrendingUp
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import './AdminDashboard.css';
@@ -237,6 +237,15 @@ Asquare & Co. Tours & Travels
               {t.icon} {t.label}
             </button>
           ))}
+          <div className="sidebar-divider" />
+          <a
+            href="https://expense-tracker-fjm5.onrender.com"
+            target="_blank"
+            rel="noreferrer"
+            className="sidebar-expense-btn"
+          >
+            <TrendingUp size={15} /> Expense Tracker
+          </a>
         </nav>
         <div className="sidebar-footer">
           <img src={user.photo} alt={user.name} className="sidebar-avatar" />
@@ -260,6 +269,14 @@ Asquare & Co. Tours & Travels
           </div>
           <div className="admin-topbar-actions">
             <button className={`admin-refresh-btn ${loading ? 'spinning' : ''}`} onClick={fetchData}><RefreshCw size={15}/></button>
+            <a
+              href="https://expense-tracker-fjm5.onrender.com"
+              target="_blank"
+              rel="noreferrer"
+              className="expense-tracker-btn"
+            >
+              <TrendingUp size={14} /> Expense Tracker
+            </a>
             <button className="btn-primary" onClick={() => navigate('/')} style={{ padding:'10px 20px', fontSize:'13px' }}>View Site <ArrowRight size={13}/></button>
           </div>
         </div>

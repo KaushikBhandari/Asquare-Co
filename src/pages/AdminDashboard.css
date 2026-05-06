@@ -218,3 +218,59 @@
   .kpi-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
   .kpi-value { font-size: 28px; }
 }
+
+/* ── Expense Tracker — Sidebar Button ── */
+.sidebar-divider {
+  height: 1px;
+  background: rgba(255,255,255,0.08);
+  margin: 10px 12px;
+}
+.sidebar-expense-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 14px;
+  margin: 0 12px;
+  border-radius: var(--r-md);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--font-ui);
+  color: #fff;
+  background: linear-gradient(135deg, #00897B, #00695C);
+  text-decoration: none;
+  transition: all 0.2s;
+  box-shadow: 0 4px 14px rgba(0,137,123,0.35);
+}
+.sidebar-expense-btn:hover {
+  background: linear-gradient(135deg, #00695C, #004D40);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(0,137,123,0.45);
+}
+
+/* ── Expense Tracker — Topbar Button ── */
+.expense-tracker-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 18px;
+  border-radius: var(--r-full);
+  font-size: 13px;
+  font-weight: 700;
+  font-family: var(--font-ui);
+  color: #fff;
+  background: linear-gradient(135deg, #00897B, #00695C);
+  text-decoration: none;
+  transition: all 0.25s;
+  box-shadow: 0 4px 14px rgba(0,137,123,0.3);
+  white-space: nowrap;
+}
+.expense-tracker-btn:hover {
+  background: linear-gradient(135deg, #00695C, #004D40);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(0,137,123,0.42);
+}
+
+/* Hide topbar btn on mobile — sidebar btn handles it */
+@media (max-width: 900px) {
+  .expense-tracker-btn { display: none; }
+}
