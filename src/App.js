@@ -9,7 +9,9 @@ import Destinations from './pages/Destinations';
 import Packages from './pages/Packages';
 import BookingPage from './pages/BookingPage';
 import AdminDashboard from './pages/AdminDashboard';
+import FeedbackForm from './pages/FeedbackForm';
 import ChatBot from './components/ChatBot';
+import TaxiWidget from './components/TaxiWidget';
 import { Toaster } from 'react-hot-toast';
 import './styles/global.css';
 
@@ -27,7 +29,9 @@ export default function App() {
               <Route path="/packages" element={<Packages />} />
               <Route path="/booking" element={<BookingPage />} />
               <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="/feedback/:bookingId" element={<FeedbackForm />} />
             </Routes>
+            <TaxiWidget />
             <ChatBot />
           </AuthGuard>
           <Toaster

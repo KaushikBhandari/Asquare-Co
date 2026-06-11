@@ -166,6 +166,17 @@
 .admin-gate-card p { font-size: 14px; color: var(--ink-soft); margin-bottom: 24px; line-height: 1.6; }
 .gate-icon { color: var(--coral); }
 
+/* Reviews */
+.reviews-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+.review-card { background: #fff; border-radius: var(--r-lg); padding: 20px; box-shadow: var(--shadow-sm); border: 1px solid var(--sand); display: flex; flex-direction: column; gap: 14px; transition: transform 0.2s, box-shadow 0.2s; }
+.review-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.review-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--sand); padding-bottom: 12px; }
+.review-rating { display: flex; gap: 2px; }
+.review-date { font-size: 12px; color: var(--ink-soft); font-family: var(--font-ui); font-weight: 500; }
+.review-highlight { font-size: 13px; color: var(--ink); font-family: var(--font-ui); line-height: 1.5; background: var(--cream); padding: 12px 14px; border-radius: var(--r-md); border-left: 3px solid var(--coral); }
+.review-comments { font-size: 14px; color: var(--ink-mid); font-family: var(--font-ui); line-height: 1.6; }
+.review-footer { font-size: 10px; color: var(--ink-soft); font-family: var(--font-ui); text-transform: uppercase; letter-spacing: 0.05em; margin-top: auto; padding-top: 12px; }
+
 /* ══ MOBILE ══ */
 @media (max-width: 1024px) {
   .kpi-grid { grid-template-columns: repeat(2, 1fr); }

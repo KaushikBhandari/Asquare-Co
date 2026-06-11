@@ -95,49 +95,97 @@ export default function BookingPage() {
   ];
 
   const handleSendEnquiry = async () => {
-    if (!user) { setShowGate(true); return; }
     if (!form.firstName || !form.email || !form.phone) {
       toast.error('Please fill in your name, email and phone number.');
       return;
     }
     setLoading(true);
 
-    const enquiryData = {
-      customerName:  `${form.firstName} ${form.lastName}`.trim(),
-      firstName:     form.firstName,
-      lastName:      form.lastName,
-      email:         form.email,
-      phone:         form.phone,
-      whatsapp:      form.whatsapp || form.phone,
-      city:          form.city,
-      userId:        user.uid || null,
-      userGoogle:    user.email,
-      selectedPackage:      item?.name || 'Not selected',
-      packageType:          itemType || 'N/A',
-      packageDestinations:  item?.destinations?.join(', ') || item?.country || 'N/A',
-      packageDuration:      item?.duration || 'N/A',
-      packageIncludes:      item?.includes?.join(', ') || item?.highlights?.join(', ') || 'N/A',
-      packageRating:        item?.rating || 'N/A',
-      departureDate:  form.departureDate || 'Flexible',
-      returnDate:     form.returnDate || 'Flexible',
-      travelers:      form.travelers,
-      tripType:       form.tripType,
-      roomType:       form.roomType,
-      budget:         form.budget,
-      customerMessage: form.message || 'No special requests',
-      newsletter:      form.newsletter,
-      submittedAt: new Date().toISOString(),
-      source: 'Asquare & Co. Website',
-    };
+    // --- FIX: guard every field so Firestore never receives `undefined` ---
+    // Firestore will throw "invalid-argument" and silently drop the write if any
+    // field is undefined. We replace all undefined/empty values with null or a
+    // sensible default before sending.
+    const s = (val, fallback = null) =>
+      val !== undefined && val !== '' && val !== null ? val : fallback;
 
-    const { id, error } = await saveEnquiry(enquiryData);
+    const destinations = Array.isArray(item?.destinations)
+      ? item.destinations.join(', ')
+      : s(item?.country);
+    const includes = Array.isArray(item?.includes)
+      ? item.includes.join(', ')
+      : Array.isArray(item?.highlights)
+        ? item.highlights.join(', ')
+        : null;
+
+    const enquiryData = {
+      customerName:         `${form.firstName} ${form.lastName}`.trim(),
+      firstName:            s(form.firstName),
+      lastName:             s(form.lastName),
+      email:                s(form.email),
+      phone:                s(form.phone),
+      whatsapp:             s(form.whatsapp?.trim() || form.phone),
+      city:                 s(form.city),
+      userId:               s(user?.uid),
+      userGoogle:           s(user?.email),
+      selectedPackage:      s(item?.name, 'Not selected'),
+      packageType:          s(itemType, 'N/A'),
+      packageDestinations:  s(destinations, 'N/A'),
+      packageDuration:      s(item?.duration, 'N/A'),
+      packageIncludes:      s(includes, 'N/A'),
+      packageRating:        s(item?.rating, 'N/A'),
+      departureDate:        s(form.departureDate, 'Flexible'),
+      returnDate:           s(form.returnDate, 'Flexible'),
+      travelers:            s(form.travelers),
+      tripType:             s(form.tripType),
+      roomType:             s(form.roomType),
+      budget:               s(form.budget),
+      customerMessage:      s(form.message, 'No special requests'),
+      newsletter:           form.newsletter ?? true,
+      submittedAt:          new Date().toISOString(),
+      source:               'Asquare & Co. Website',
+    };
+    // --- END FIX ---
+
+    const { id, error, code } = await saveEnquiry(enquiryData);
     const finalId = id || 'ASQ' + Date.now();
 
     if (error) {
+      console.error('🔴 Firebase saveEnquiry failed — code:', code, '— message:', error);
+
+      // Give the user a specific, actionable message based on the error type
+      if (code === 'permission-denied' || code === 'unauthenticated') {
+        toast.error('Session expired — please sign out and sign back in, then try again.');
+      } else if (code === 'unavailable' || code === 'deadline-exceeded') {
+        toast.error('Network error — check your internet connection and try again.');
+      } else {
+        // Still advance to step 3 — enquiry is saved locally as backup
+        toast("Enquiry saved locally — we'll sync it shortly.", { icon: '⚠️' });
+      }
+
+      // Always persist locally so no data is lost
       const enquiries = JSON.parse(localStorage.getItem('wl_enquiries') || '[]');
       enquiries.unshift({ ...enquiryData, id: finalId });
       localStorage.setItem('wl_enquiries', JSON.stringify(enquiries));
+
+      // For permission errors, stop here — user needs to re-authenticate
+      if (code === 'permission-denied' || code === 'unauthenticated') {
+        setLoading(false);
+        return;
+      }
+    } else {
+      console.log('✅ Enquiry saved to Firebase — ID:', finalId);
     }
+
+    // Send to Make.com webhook
+try {
+  await fetch('https://hook.eu2.make.com/https://hook.eu1.make.com/0nuz3l74kpopb1wo1w46yfyncb7w441x', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ ...enquiryData, id: finalId }),
+  });
+} catch (webhookErr) {
+  console.warn('Make webhook failed:', webhookErr.message);
+}
 
     setEnquiryRef(finalId);
 
@@ -160,7 +208,7 @@ export default function BookingPage() {
       toast.error('Please fill your name, email and phone.');
       return;
     }
-    if (!user) { setShowGate(true); return; }
+    // Guests are allowed to review and submit — no auth gate here
     setStep(2);
   };
 
@@ -530,7 +578,7 @@ export default function BookingPage() {
 
       {showGate && (
         <SignInGate
-          onClose={() => { setShowGate(false); setStep(step === 1 ? 2 : step); }}
+          onClose={() => { setShowGate(false); handleSendEnquiry(); }}
           onSignIn={() => { setShowGate(false); setShowAuthModal(true); }}
         />
       )}

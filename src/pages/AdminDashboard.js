@@ -5,16 +5,17 @@ import {
   getEnquiries, updateEnquiryStatus,
   saveAdminDestination, getAdminDestinations, updateAdminDestination, deleteAdminDestination,
   saveAdminPackage, getAdminPackages, updateAdminPackage, deleteAdminPackage,
-  getUsers
+  getUsers, getFeedback
 } from '../firebase/config';
 import { useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard, Users, MessageSquare, MapPin, Package,
   CheckCircle, RefreshCw, Globe, LogIn, ArrowRight,
   Mail, Phone, Plus, Trash2, Star, Clock, Tag, X, Edit2,
-  Eye, Calendar, Shield, TrendingUp
+  Eye, Calendar, Shield, TrendingUp, Send
 } from 'lucide-react';
 import toast from 'react-hot-toast';
+import FollowUpPanel from '../components/admin/FollowUpPanel';
 import './AdminDashboard.css';
 
 const CATEGORIES = ['Goa', 'India', 'Asia', 'Europe', 'Middle East', 'South America', 'Africa', 'Oceania'];
@@ -38,11 +39,13 @@ export default function AdminDashboard() {
   const [fbUsers,    setFbUsers]    = useState([]);
   const [adminDests, setAdminDests] = useState([]);
   const [adminPkgs,  setAdminPkgs]  = useState([]);
+  const [feedbacks,  setFeedbacks]  = useState([]);
   const [loading,    setLoading]    = useState(false);
 
   const [destModal,    setDestModal]    = useState(null);
   const [pkgModal,     setPkgModal]     = useState(null);
   const [viewEnquiry,  setViewEnquiry]  = useState(null);
+  const [viewFeedback, setViewFeedback] = useState(null);
   const [destForm,     setDestForm]     = useState(EMPTY_DEST);
   const [pkgForm,      setPkgForm]      = useState(EMPTY_PKG);
   const [saving,       setSaving]       = useState(false);
@@ -51,8 +54,8 @@ export default function AdminDashboard() {
   const fetchData = async () => {
     if (!user) return;
     setLoading(true);
-    const [enqs, usrs, adsts, apkgs] = await Promise.all([
-      getEnquiries(), getUsers(), getAdminDestinations(), getAdminPackages()
+    const [enqs, usrs, adsts, apkgs, fbs] = await Promise.all([
+      getEnquiries(), getUsers(), getAdminDestinations(), getAdminPackages(), getFeedback()
     ]);
     const localEnqs = JSON.parse(localStorage.getItem('wl_enquiries') || '[]');
     const merged = [...enqs, ...localEnqs.filter(le => !enqs.find(fe => fe.id === le.id))];
@@ -60,6 +63,7 @@ export default function AdminDashboard() {
     setFbUsers(usrs);
     setAdminDests(adsts);
     setAdminPkgs(apkgs);
+    setFeedbacks(fbs);
     setLoading(false);
   };
 
@@ -98,9 +102,11 @@ export default function AdminDashboard() {
   const TABS = [
     { id: 'overview',      label: 'Overview',    icon: <LayoutDashboard size={15}/> },
     { id: 'enquiries',     label: `Enquiries${newEnq > 0 ? ` (${newEnq})` : ''}`, icon: <MessageSquare size={15}/> },
+    { id: 'followups',     label: 'Follow-ups',  icon: <Send size={15}/> },
     { id: 'destinations',  label: 'Destinations', icon: <MapPin size={15}/> },
     { id: 'packages',      label: 'Packages',     icon: <Package size={15}/> },
     { id: 'users',         label: 'Users',        icon: <Users size={15}/> },
+    { id: 'reviews',       label: 'Reviews',      icon: <Star size={15}/> },
   ];
 
   const openAddDest  = () => { setDestForm(EMPTY_DEST); setDestModal('add'); };
@@ -263,7 +269,7 @@ Asquare & Co. Tours & Travels
         <div className="admin-topbar">
           <div>
             <h1 className="admin-page-title">
-              {tab === 'overview' ? 'Dashboard Overview' : tab === 'enquiries' ? 'Customer Enquiries' : tab === 'destinations' ? 'Manage Destinations' : tab === 'packages' ? 'Manage Packages' : 'Users'}
+              {tab === 'overview' ? 'Dashboard Overview' : tab === 'enquiries' ? 'Customer Enquiries' : tab === 'destinations' ? 'Manage Destinations' : tab === 'packages' ? 'Manage Packages' : tab === 'reviews' ? 'Customer Reviews' : 'Users'}
             </h1>
             <p className="admin-page-date">{new Date().toLocaleDateString('en-IN', { weekday:'long', year:'numeric', month:'long', day:'numeric' })}</p>
           </div>
@@ -400,6 +406,16 @@ Asquare & Co. Tours & Travels
           </div>
         )}
 
+        {/* FOLLOW-UPS */}
+        {tab === 'followups' && (
+          <div className="admin-content animate-up">
+            <div className="content-toolbar">
+              <h3 className="content-sub-title">Daily Follow-ups</h3>
+            </div>
+            <FollowUpPanel />
+          </div>
+        )}
+
         {/* DESTINATIONS */}
         {tab === 'destinations' && (
           <div className="admin-content animate-up">
@@ -482,6 +498,36 @@ Asquare & Co. Tours & Travels
                 ))}
               </div>
             </div>
+          </div>
+        )}
+
+        {/* REVIEWS */}
+        {tab === 'reviews' && (
+          <div className="admin-content animate-up">
+            <div className="content-toolbar">
+              <h3 className="content-sub-title">Customer Feedback <span>({feedbacks.length} reviews)</span></h3>
+            </div>
+            {feedbacks.length === 0
+              ? <div className="empty-page-state"><Star size={44}/><h3>No feedback yet</h3><p>When customers submit feedback after their trip, it will appear here.</p></div>
+              : <div className="reviews-grid">
+                  {feedbacks.map(f => (
+                    <div key={f.id} className="review-card" onClick={() => setViewFeedback(f)} style={{cursor: 'pointer'}}>
+                      <div className="review-header">
+                        <div className="review-rating">
+                           {[...Array(5)].map((_,i) => <Star key={i} size={14} fill={i < f.rating ? '#FFD700' : 'transparent'} color={i < f.rating ? '#FFD700' : '#E5E7EB'} />)}
+                        </div>
+                        <div className="review-date">{f.createdAt?.toDate ? new Date(f.createdAt.toDate()).toLocaleDateString() : 'Recent'}</div>
+                      </div>
+                      <div className="review-comments">
+                        {f.comments && <p>"{f.comments}"</p>}
+                        {f.highlight && <p style={{marginTop: f.comments ? '8px' : '0', fontSize: '13px', color: '#1A1A2E'}}><strong>Loved:</strong> {f.highlight}</p>}
+                        {f.improvement && <p style={{marginTop: '4px', fontSize: '13px', color: '#1A1A2E'}}><strong>Needs work:</strong> {f.improvement}</p>}
+                      </div>
+                      <div className="review-footer">Booking ID: {f.bookingId || 'N/A'}</div>
+                    </div>
+                  ))}
+                </div>
+            }
           </div>
         )}
       </main>
@@ -592,6 +638,84 @@ Asquare & Co. Tours & Travels
                 className="btn-primary"
               ><Mail size={14}/> Reply via Email</a>
               <a href={`tel:${viewEnquiry.phone}`} className="btn-ghost"><Phone size={14}/> Call</a>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* FEEDBACK DETAIL MODAL */}
+      {viewFeedback && (
+        <div className="modal-overlay" onClick={e => e.target===e.currentTarget && setViewFeedback(null)}>
+          <div className="enquiry-detail-modal">
+            <div className="modal-header">
+              <h2 className="modal-title">Review Details</h2>
+              <button className="modal-close" onClick={() => setViewFeedback(null)}><X size={18}/></button>
+            </div>
+            <div className="modal-body enq-detail-body">
+              <div className="enq-detail-grid">
+                <div className="enq-detail-row">
+                  <span className="enq-detail-label">Overall Rating</span>
+                  <span className="enq-detail-val">{viewFeedback.rating}/5</span>
+                </div>
+                {viewFeedback.guideRating > 0 && (
+                  <div className="enq-detail-row">
+                    <span className="enq-detail-label">Tour Guide</span>
+                    <span className="enq-detail-val">{viewFeedback.guideRating}/5</span>
+                  </div>
+                )}
+                {viewFeedback.accommodationRating > 0 && (
+                  <div className="enq-detail-row">
+                    <span className="enq-detail-label">Accommodation</span>
+                    <span className="enq-detail-val">{viewFeedback.accommodationRating}/5</span>
+                  </div>
+                )}
+                {viewFeedback.transportRating > 0 && (
+                  <div className="enq-detail-row">
+                    <span className="enq-detail-label">Transport</span>
+                    <span className="enq-detail-val">{viewFeedback.transportRating}/5</span>
+                  </div>
+                )}
+                {viewFeedback.valueRating > 0 && (
+                  <div className="enq-detail-row">
+                    <span className="enq-detail-label">Value for Money</span>
+                    <span className="enq-detail-val">{viewFeedback.valueRating}/5</span>
+                  </div>
+                )}
+                <div className="enq-detail-row">
+                  <span className="enq-detail-label">Booking ID</span>
+                  <span className="enq-detail-val">{viewFeedback.bookingId || 'N/A'}</span>
+                </div>
+                <div className="enq-detail-row">
+                  <span className="enq-detail-label">Submitted On</span>
+                  <span className="enq-detail-val">{viewFeedback.createdAt?.toDate ? new Date(viewFeedback.createdAt.toDate()).toLocaleDateString() : 'Recent'}</span>
+                </div>
+              </div>
+              
+              {viewFeedback.highlight && (
+                <div className="enq-message-box" style={{backgroundColor: '#F8FAFC'}}>
+                  <div className="enq-detail-label" style={{color: '#0D9488'}}>Loved</div>
+                  <p style={{fontStyle: 'normal', color: '#0F172A'}}>{viewFeedback.highlight}</p>
+                </div>
+              )}
+              
+              {viewFeedback.improvement && (
+                <div className="enq-message-box" style={{backgroundColor: '#FFF1F2'}}>
+                  <div className="enq-detail-label" style={{color: '#E11D48'}}>Needs Improvement</div>
+                  <p style={{fontStyle: 'normal', color: '#0F172A'}}>{viewFeedback.improvement}</p>
+                </div>
+              )}
+              
+              {viewFeedback.comments && (
+                <div className="enq-message-box">
+                  <div className="enq-detail-label">Comments</div>
+                  <p>"{viewFeedback.comments}"</p>
+                </div>
+              )}
+            </div>
+            <div className="modal-footer">
+              <button className="btn-primary" style={{width: '100%', justifyContent: 'center'}} onClick={() => setViewFeedback(null)}>
+                Close
+              </button>
             </div>
           </div>
         </div>

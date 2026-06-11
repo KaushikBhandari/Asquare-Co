@@ -15,12 +15,13 @@ import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, query, order
 
 // ⚠️  REPLACE WITH YOUR FIREBASE CONFIG ⚠️
 const firebaseConfig = {
-  apiKey: "AIzaSyCDgSr61HeKel0nXzgTzfdj9ovRTSAQdKI",
-  authDomain: "tourism-963ea.firebaseapp.com",
-  projectId: "tourism-963ea",
-  storageBucket: "tourism-963ea.firebasestorage.app",
-  messagingSenderId: "547490649442",
-  appId: "1:547490649442:web:b277bcd8d1580f66ab483b"
+  apiKey: "AIzaSyDCspl0JjvJJH03lVfQsq6e8eIGBle85Cs",
+  authDomain: "asquare-dcb81.firebaseapp.com",
+  projectId: "asquare-dcb81",
+  storageBucket: "asquare-dcb81.firebasestorage.app",
+  messagingSenderId: "277935244668",
+  appId: "1:277935244668:web:26c94ccecb54d547c790f9",
+  measurementId: "G-93KBDF97MS"
 };
 
 // Initialize Firebase
@@ -84,12 +85,13 @@ const saveUserToFirestore = async (user, provider, displayName) => {
 export const saveBooking = async (booking) => {
   try {
     const docRef = await addDoc(collection(db, 'bookings'), {
-      ...booking,
+      ...sanitize(booking),
       createdAt: serverTimestamp(),
       status: 'confirmed'
     });
     return { id: docRef.id, error: null };
   } catch (err) {
+    console.error('🔴 saveBooking Firebase error:', err);
     return { id: null, error: err.message };
   }
 };
@@ -122,16 +124,25 @@ export const updateBookingStatus = async (id, status) => {
   }
 };
 
+// ── SANITIZE HELPER ──────────────────────────────────────────
+// Firestore throws if any value is `undefined`. This strips them out,
+// replacing undefined with null so every field is safely stored.
+const sanitize = (obj) =>
+  Object.fromEntries(
+    Object.entries(obj).map(([k, v]) => [k, v === undefined ? null : v])
+  );
+
 // ── ENQUIRY HELPERS ───────────────────────────────────────────
 export const saveEnquiry = async (enquiry) => {
   try {
     const docRef = await addDoc(collection(db, 'enquiries'), {
-      ...enquiry,
+      ...sanitize(enquiry),
       createdAt: serverTimestamp(),
       status: 'new',
     });
     return { id: docRef.id, error: null };
   } catch (err) {
+    console.error('🔴 saveEnquiry Firebase error:', err);
     return { id: null, error: err.message };
   }
 };
@@ -236,5 +247,29 @@ export const updateAdminDestination = async (id, data) => {
     return { error: null };
   } catch (err) {
     return { error: err.message };
+  }
+};
+
+// ── FEEDBACK HELPERS ─────────────────────────────────────────
+export const saveFeedback = async (feedbackData) => {
+  try {
+    const docRef = await addDoc(collection(db, 'feedback'), {
+      ...sanitize(feedbackData),
+      createdAt: serverTimestamp(),
+    });
+    return { id: docRef.id, error: null };
+  } catch (err) {
+    console.error('🔴 saveFeedback Firebase error:', err);
+    return { id: null, error: err.message };
+  }
+};
+
+export const getFeedback = async () => {
+  try {
+    const q = query(collection(db, 'feedback'), orderBy('createdAt', 'desc'));
+    const snap = await getDocs(q);
+    return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  } catch (err) {
+    return [];
   }
 };

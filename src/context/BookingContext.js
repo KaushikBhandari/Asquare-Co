@@ -13,11 +13,17 @@ export function BookingProvider({ children }) {
       bookingId: 'WL' + Date.now(),
       status: 'confirmed',
     };
-    // Try Firebase first, fallback to local
+    // Try Firebase first, fallback to local state
     const { id, error } = await saveBooking(bookingData);
+    if (error) {
+      // Log clearly so the issue is visible in DevTools console
+      console.error('🔴 BookingContext — Firebase saveBooking failed:', error);
+      toast.error('Server save failed — booking stored locally as backup.');
+    } else {
+      console.log('✅ Booking saved to Firebase — ID:', id);
+    }
     const finalBooking = { ...bookingData, id: id || bookingData.bookingId };
     setLocalBookings(prev => [finalBooking, ...prev]);
-    if (error) console.warn('Firebase save failed, using local:', error);
     toast.success('Booking Confirmed! 🎉');
     return finalBooking;
   };
