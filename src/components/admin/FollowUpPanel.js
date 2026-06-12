@@ -51,7 +51,7 @@ export default function FollowUpPanel() {
     if (isEnded) {
       return {
         subject: `Welcome back from ${trip.packageDestinations}!`,
-        body: `Hi ${trip.firstName || trip.customerName},\n\nWe hope you had a fantastic trip to ${trip.packageDestinations}! Welcome back.\n\nWe would love to hear about your experience. Please take a minute to fill out our feedback form:\n${window.location.origin}/feedback/${trip.id}\n\nWarm regards,\nAsquare & Co. Tours & Travels`
+        body: `Hi ${trip.firstName || trip.customerName},\n\nWe hope you had a fantastic trip to ${trip.packageDestinations}! Welcome back.\n\nWe would love to hear about your experience. Please take a minute to fill out our feedback form:\n${window.location.origin}/feedback/${trip.id}\n\nWarm regards,\nAsquaretravelgoa Tours & Travels`
       };
     }
 
@@ -62,17 +62,17 @@ export default function FollowUpPanel() {
     if (dayOfTrip === 1) {
       return {
         subject: `Welcome to ${trip.packageDestinations}!`,
-        body: `Hi ${trip.firstName || trip.customerName},\n\nWelcome to ${trip.packageDestinations}! We hope you had a smooth arrival and are getting settled in.\n\nIf you need anything at all as you start your journey, please don't hesitate to reach out. Enjoy your first day!\n\nWarm regards,\nAsquare & Co. Tours & Travels`
+        body: `Hi ${trip.firstName || trip.customerName},\n\nWelcome to ${trip.packageDestinations}! We hope you had a smooth arrival and are getting settled in.\n\nIf you need anything at all as you start your journey, please don't hesitate to reach out. Enjoy your first day!\n\nWarm regards,\nAsquaretravelgoa Tours & Travels`
       };
     } else if (dayOfTrip === 2) {
       return {
         subject: `Day 2 in ${trip.packageDestinations}`,
-        body: `Hi ${trip.firstName || trip.customerName},\n\nGood morning! Ready for an exciting Day 2 in ${trip.packageDestinations}? \n\nWe hope you have a wonderful time exploring today. Let us know if you need any local recommendations!\n\nWarm regards,\nAsquare & Co. Tours & Travels`
+        body: `Hi ${trip.firstName || trip.customerName},\n\nGood morning! Ready for an exciting Day 2 in ${trip.packageDestinations}? \n\nWe hope you have a wonderful time exploring today. Let us know if you need any local recommendations!\n\nWarm regards,\nAsquaretravelgoa Tours & Travels`
       };
     } else {
       return {
         subject: `Checking in on your trip to ${trip.packageDestinations}`,
-        body: `Hi ${trip.firstName || trip.customerName},\n\nJust checking in on Day ${dayOfTrip} of your trip to ${trip.packageDestinations}! We hope everything is going wonderfully.\n\nLet us know if you need any assistance.\n\nWarm regards,\nAsquare & Co. Tours & Travels`
+        body: `Hi ${trip.firstName || trip.customerName},\n\nJust checking in on Day ${dayOfTrip} of your trip to ${trip.packageDestinations}! We hope everything is going wonderfully.\n\nLet us know if you need any assistance.\n\nWarm regards,\nAsquaretravelgoa Tours & Travels`
       };
     }
   };

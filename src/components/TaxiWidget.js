@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Car, X, MapPin, Navigation, User, Phone, Calendar, Users, Route } from 'lucide-react';
 import toast from 'react-hot-toast';
 import './TaxiWidget.css';
 
 export default function TaxiWidget() {
+  const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith('/admin');
   const [open, setOpen] = useState(false);
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
@@ -13,6 +16,8 @@ export default function TaxiWidget() {
   const [travellers, setTravellers] = useState(1);
   const [tripType, setTripType] = useState('One Way');
   const [gettingLocation, setGettingLocation] = useState(false);
+
+  if (isAdminRoute) return null;
 
   const handleGetLocation = () => {
     if (!navigator.geolocation) {
@@ -49,8 +54,8 @@ export default function TaxiWidget() {
     }
 
     // Using plain text without emojis to avoid encoding issues
-    const message = `Hello Asquare & Co.!\n\nI would like to enquire about a taxi booking:\n\n*Name:* ${name}\n*WhatsApp Number:* ${phone}\n*Pickup:* ${fromLocation}\n*Drop:* ${toLocation}\n*Date:* ${travelDate}\n*Travellers:* ${travellers}\n*Trip Type:* ${tripType}\n\nPlease let me know the pricing and availability. Thank you!`;
-    const whatsappUrl = `https://wa.me/919823607896?text=${encodeURIComponent(message)}`;
+    const message = `Hello Asquaretravelgoa!\n\nI would like to enquire about a taxi booking:\n\n*Name:* ${name}\n*WhatsApp Number:* ${phone}\n*Pickup:* ${fromLocation}\n*Drop:* ${toLocation}\n*Date:* ${travelDate}\n*Travellers:* ${travellers}\n*Trip Type:* ${tripType}\n\nPlease let me know the pricing and availability. Thank you!`;
+    const whatsappUrl = `https://wa.me/919529338747?text=${encodeURIComponent(message)}`;
     
     window.open(whatsappUrl, '_blank');
     setOpen(false);

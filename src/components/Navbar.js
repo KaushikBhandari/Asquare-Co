@@ -16,8 +16,10 @@ export default function Navbar() {
   const [scrolled,     setScrolled]     = useState(false);
   const [menuOpen,     setMenuOpen]     = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [logoModalOpen, setLogoModalOpen] = useState(false);
   const { user, logout, setShowAuthModal, showAuthModal } = useAuth();
-  const location  = useLocation();
+  const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith('/admin');
   const dropRef   = useRef(null);
 
   // Scroll effect
@@ -53,22 +55,37 @@ export default function Navbar() {
     setUserMenuOpen(false);
   };
 
+  if (isAdminRoute) {
+    return (
+      <>
+        {showAuthModal && (
+          <div
+            className="auth-modal-overlay"
+            onClick={e => e.target === e.currentTarget && setShowAuthModal(false)}
+          >
+            <AuthModal onClose={() => setShowAuthModal(false)} />
+          </div>
+        )}
+      </>
+    );
+  }
+
   return (
     <>
       <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
         <div className="nav-inner container">
 
           {/* Logo */}
-          <Link to="/" className="nav-logo" onClick={() => setMenuOpen(false)}>
-            <img src="/logo.jpeg" alt="Asquare & Co." className="nav-logo-img" />
+          <div className="nav-logo" onClick={() => { setMenuOpen(false); setLogoModalOpen(true); }} style={{ cursor: 'pointer' }}>
+            <img src="/logo.jpeg" alt="Asquaretravelgoa" className="nav-logo-img" />
             <div className="nav-logo-text">
-              <span className="nav-logo-name">Asquare <strong>&amp; Co.</strong></span>
+              <span className="nav-logo-name"><strong>Asquaretravelgoa</strong></span>
               <span className="nav-logo-sub">
                 Tours &amp; Travels
                 <span className="nav-logo-goa">GOA</span>
               </span>
             </div>
-          </Link>
+          </div>
 
           {/* Desktop Nav Links */}
           <ul className="nav-links">
@@ -203,6 +220,19 @@ export default function Navbar() {
           onClick={e => e.target === e.currentTarget && setShowAuthModal(false)}
         >
           <AuthModal onClose={() => setShowAuthModal(false)} />
+        </div>
+      )}
+
+      {/* Logo Modal */}
+      {logoModalOpen && (
+        <div className="logo-modal-overlay" onClick={e => e.target === e.currentTarget && setLogoModalOpen(false)}>
+          <div className="logo-modal-content">
+            <img src="/logo.jpeg" alt="Asquaretravelgoa Logo" className="logo-modal-img" />
+            <div className="logo-modal-actions">
+              <Link to="/" className="btn-primary" onClick={() => setLogoModalOpen(false)}>Go to Home</Link>
+              <button className="btn-ghost" onClick={() => setLogoModalOpen(false)}>Back</button>
+            </div>
+          </div>
         </div>
       )}
     </>

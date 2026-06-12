@@ -142,7 +142,7 @@ export default function BookingPage() {
       customerMessage:      s(form.message, 'No special requests'),
       newsletter:           form.newsletter ?? true,
       submittedAt:          new Date().toISOString(),
-      source:               'Asquare & Co. Website',
+      source:               'Asquaretravelgoa Website',
     };
     // --- END FIX ---
 
@@ -517,7 +517,7 @@ try {
                     </button>
 
                     <p className="send-note">
-                      By submitting you agree to be contacted by Asquare &amp; Co. Tours &amp; Travels regarding your enquiry.
+                      By submitting you agree to be contacted by Asquaretravelgoa Tours &amp; Travels regarding your enquiry.
                     </p>
                   </div>
                 </div>

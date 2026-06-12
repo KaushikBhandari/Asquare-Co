@@ -42,9 +42,9 @@ export default function AuthModal() {
 
         <div className="auth-content">
           <div className="auth-emoji">✈️</div>
-          <h2 className="auth-title">{mode === 'signin' ? 'Welcome Back!' : 'Join Asquare & Co.'}</h2>
+          <h2 className="auth-title">{mode === 'signin' ? 'Welcome Back!' : 'Join Asquaretravelgoa'}</h2>
           <p className="auth-sub">
-            {mode === 'signin' ? 'Sign in to access exclusive deals & bookings' : 'Create an account with Asquare & Co. to start exploring the world'}
+            {mode === 'signin' ? 'Sign in to access exclusive deals & bookings' : 'Create an account with Asquaretravelgoa to start exploring the world'}
           </p>
 
           {/* Google */}

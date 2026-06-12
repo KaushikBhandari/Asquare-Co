@@ -44,9 +44,9 @@ export const sendCustomerConfirmation = async (enquiry) => {
       budget:        enquiry.budget,
       est_price:     `$${Number(enquiry.packagePrice || 0).toLocaleString()}`,
       message:       enquiry.customerMessage || 'No special requests',
-      company_name:  'Asquare & Co. Tours & Travels',
-      company_email: 'info@asquareco.com',  // ← your company email
-      company_phone: '+91 XXXXX XXXXX',     // ← your phone
+      company_name:  'Asquaretravelgoa Tours & Travels',
+      company_email: 'info@asquaretravelgoa.com',  // ← your company email
+      company_phone: '+91 95293 38747',     // ← your phone
     });
     console.log('✅ Customer email sent');
     return true;
@@ -78,7 +78,7 @@ export const sendAdminNotification = async (enquiry) => {
       est_price:       `$${Number(enquiry.packagePrice || 0).toLocaleString()}`,
       customer_message: enquiry.customerMessage || 'No special requests',
       submitted_at:    new Date().toLocaleString('en-IN'),
-      admin_email:     'info@asquareco.com', // ← your admin email
+      admin_email:     'info@asquaretravelgoa.com', // ← your admin email
     });
     console.log('✅ Admin notification sent');
     return true;
@@ -162,7 +162,7 @@ export const sendAdminNotification = async (enquiry) => {
 // Hi {{customer_name}},
 //
 // Thank you for your interest in {{package_name}} with
-// Asquare & Co. Tours & Travels!
+// Asquaretravelgoa Tours & Travels!
 //
 // We've reviewed your enquiry and are excited to help you plan
 // this trip. Based on your preferences, here is what we suggest:
@@ -175,5 +175,5 @@ export const sendAdminNotification = async (enquiry) => {
 // Looking forward to crafting your perfect trip!
 //
 // Warm regards,
-// Asquare & Co. Tours & Travels
+// Asquaretravelgoa Tours & Travels
 // ══════════════════════════════════════════════════════════════

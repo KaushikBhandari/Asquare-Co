@@ -50,6 +50,7 @@ export default function AdminDashboard() {
   const [pkgForm,      setPkgForm]      = useState(EMPTY_PKG);
   const [saving,       setSaving]       = useState(false);
   const [mobileNav,    setMobileNav]    = useState(false);
+  const [logoModalOpen, setLogoModalOpen] = useState(false);
 
   const fetchData = async () => {
     if (!user) return;
@@ -174,7 +175,7 @@ export default function AdminDashboard() {
   const waMsg = (e) =>
 `Hi ${e.firstName || e.customerName},
 
-Thank you for your enquiry with Asquare & Co. Tours & Travels!
+Thank you for your enquiry with Asquaretravelgoa Tours & Travels!
 
 We have reviewed your request for ${e.selectedPackage} and would love to help you plan this trip.
 
@@ -183,12 +184,12 @@ Could you let us know your available dates and we will share the best package op
 Looking forward to hearing from you!
 
 Warm regards,
-Asquare & Co. Tours & Travels`;
+Asquaretravelgoa Tours & Travels`;
 
   const emailBody = (e) =>
 `Hi ${e.firstName || e.customerName},
 
-Thank you for your enquiry with Asquare & Co. Tours & Travels!
+Thank you for your enquiry with Asquaretravelgoa Tours & Travels!
 
 We have reviewed your request for ${e.selectedPackage || 'your selected trip'} and are excited to help you plan this journey.
 
@@ -208,9 +209,9 @@ Based on your preferences, here is our recommended itinerary:
 To confirm or discuss any changes, simply reply to this email or call us.
 
 Warm regards,
-Asquare & Co. Tours & Travels
-📞 +91 XXXXX XXXXX
-📧 info@asquareco.com`;
+Asquaretravelgoa Tours & Travels
+📞 +91 95293 38747
+📧 info@asquaretravelgoa.com`;
 
   const switchTab = (id) => { setTab(id); setMobileNav(false); };
 
@@ -219,8 +220,8 @@ Asquare & Co. Tours & Travels
 
       {/* Mobile top bar */}
       <div className="admin-mobile-topbar">
-        <div className="admin-mobile-brand">
-          <img src="/logo.jpeg" alt="Asquare" className="sidebar-logo-img" />
+        <div className="admin-mobile-brand" onClick={() => setLogoModalOpen(true)} style={{ cursor: 'pointer' }}>
+          <img src="/logo.jpeg" alt="Asquaretravelgoa" className="sidebar-logo-img" />
           <span>Admin</span>
         </div>
         <button className="admin-hamburger" onClick={() => setMobileNav(o => !o)}>
@@ -230,10 +231,10 @@ Asquare & Co. Tours & Travels
 
       {/* SIDEBAR */}
       <aside className={`admin-sidebar ${mobileNav ? 'mobile-open' : ''}`}>
-        <div className="sidebar-brand">
-          <img src="/logo.jpeg" alt="Asquare" className="sidebar-logo-img" />
+        <div className="sidebar-brand" onClick={() => setLogoModalOpen(true)} style={{ cursor: 'pointer' }}>
+          <img src="/logo.jpeg" alt="Asquaretravelgoa" className="sidebar-logo-img" />
           <div>
-            <div className="sidebar-brand-name">Asquare &amp; Co.</div>
+            <div className="sidebar-brand-name">Asquaretravelgoa</div>
             <div className="sidebar-brand-sub">Admin Panel</div>
           </div>
         </div>
@@ -395,7 +396,7 @@ Asquare & Co. Tours & Travels
                       <i class="fa-brands fa-whatsapp"></i> WhatsApp
                     </a>
                     <a
-                      href={`mailto:${e.email}?subject=Your Asquare %26 Co. Trip Enquiry — ${encodeURIComponent(e.selectedPackage)}&body=${encodeURIComponent(emailBody(e))}`}
+                      href={`mailto:${e.email}?subject=Your Asquaretravelgoa Trip Enquiry — ${encodeURIComponent(e.selectedPackage)}&body=${encodeURIComponent(emailBody(e))}`}
                       className="btn-primary eq-contact-btn"
                     ><Mail size={13}/> Reply via Email</a>
                     <a href={`tel:${e.phone}`} className="btn-ghost eq-contact-btn"><Phone size={13}/> Call</a>
@@ -530,69 +531,126 @@ Asquare & Co. Tours & Travels
             }
           </div>
         )}
+
+        {/* Modals & Overlays */}
+        {destModal && (
+          <div className="modal-overlay" onClick={e => e.target === e.currentTarget && setDestModal(null)}>
+            <div className="modal-content admin-modal">
+              <div className="modal-header">
+                <h2>{destModal === 'add' ? 'Add Destination' : 'Edit Destination'}</h2>
+                <button className="modal-close" onClick={() => setDestModal(null)}><X size={20}/></button>
+              </div>
+              <div className="modal-body admin-form-grid">
+                {/* Basic Details */}
+                <div className="form-group">
+                  <label>Name</label>
+                  <input type="text" value={destForm.name} onChange={e=>updDest('name',e.target.value)} placeholder="e.g. North Goa"/>
+                </div>
+                <div className="form-group">
+                  <label>Location / Country</label>
+                  <input type="text" value={destForm.country} onChange={e=>updDest('country',e.target.value)} placeholder="e.g. Goa, India"/>
+                </div>
+                <div className="form-group">
+                  <label>Category</label>
+                  <select value={destForm.category} onChange={e=>updDest('category',e.target.value)}>
+                    {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
+                  </select>
+                </div>
+                <div className="form-group">
+                  <label>Duration (Optional)</label>
+                  <input type="text" value={destForm.duration} onChange={e=>updDest('duration',e.target.value)} placeholder="e.g. 4 Days"/>
+                </div>
+                <div className="form-group">
+                  <label>Rating (e.g. 4.9)</label>
+                  <input type="number" step="0.1" value={destForm.rating} onChange={e=>updDest('rating',e.target.value)} />
+                </div>
+                <div className="form-group">
+                  <label>Tag (e.g. Most Popular)</label>
+                  <input type="text" value={destForm.tag} onChange={e=>updDest('tag',e.target.value)} />
+                </div>
+                <div className="form-group" style={{ gridColumn:'1 / -1' }}>
+                  <label>Image URL</label>
+                  <input type="text" value={destForm.image} onChange={e=>updDest('image',e.target.value)} placeholder="https://..."/>
+                </div>
+                <div className="form-group" style={{ gridColumn:'1 / -1' }}>
+                  <label>Highlights (Comma separated)</label>
+                  <input type="text" value={destForm.highlights} onChange={e=>updDest('highlights',e.target.value)} placeholder="Beach, Nightlife, Shopping..."/>
+                </div>
+                <div className="form-group" style={{ gridColumn:'1 / -1' }}>
+                  <label>Description</label>
+                  <textarea value={destForm.description} onChange={e=>updDest('description',e.target.value)} rows={3}/>
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button className="btn-ghost" onClick={() => setDestModal(null)}>Cancel</button>
+                <button className={`btn-primary ${saving?'spinning':''}`} onClick={saveDest}>{saving ? <RefreshCw size={16}/> : 'Save Destination'}</button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {pkgModal && (
+          <div className="modal-overlay" onClick={e => e.target === e.currentTarget && setPkgModal(null)}>
+            <div className="modal-content admin-modal">
+              <div className="modal-header">
+                <h2>{pkgModal === 'add' ? 'Add Package' : 'Edit Package'}</h2>
+                <button className="modal-close" onClick={() => setPkgModal(null)}><X size={20}/></button>
+              </div>
+              <div className="modal-body admin-form-grid">
+                {/* Basic Details */}
+                <div className="form-group" style={{ gridColumn:'1 / -1' }}>
+                  <label>Package Name</label>
+                  <input type="text" value={pkgForm.name} onChange={e=>updPkg('name',e.target.value)} placeholder="e.g. Goa Sun & Soul Escape"/>
+                </div>
+                <div className="form-group">
+                  <label>Destinations (Comma separated)</label>
+                  <input type="text" value={pkgForm.destinations} onChange={e=>updPkg('destinations',e.target.value)} placeholder="North Goa, South Goa"/>
+                </div>
+                <div className="form-group">
+                  <label>Duration</label>
+                  <input type="text" value={pkgForm.duration} onChange={e=>updPkg('duration',e.target.value)} placeholder="e.g. 5 Days / 4 Nights"/>
+                </div>
+                <div className="form-group">
+                  <label>Price ($)</label>
+                  <input type="number" value={pkgForm.price} onChange={e=>updPkg('price',e.target.value)} />
+                </div>
+                <div className="form-group">
+                  <label>Savings / Discount ($)</label>
+                  <input type="number" value={pkgForm.savings} onChange={e=>updPkg('savings',e.target.value)} />
+                </div>
+                <div className="form-group">
+                  <label>Rating (e.g. 4.9)</label>
+                  <input type="number" step="0.1" value={pkgForm.rating} onChange={e=>updPkg('rating',e.target.value)} />
+                </div>
+                <div className="form-group">
+                  <label>Tag (e.g. 🌴 Goa Special)</label>
+                  <input type="text" value={pkgForm.tag} onChange={e=>updPkg('tag',e.target.value)} />
+                </div>
+                <div className="form-group">
+                  <label>Color Code (e.g. #FF6B35)</label>
+                  <select value={pkgForm.color} onChange={e=>updPkg('color',e.target.value)}>
+                    {PKG_COLORS.map(c => <option key={c} value={c} style={{ background: c, color: '#fff' }}>{c}</option>)}
+                  </select>
+                </div>
+                <div className="form-group" style={{ gridColumn:'1 / -1' }}>
+                  <label>Image URL</label>
+                  <input type="text" value={pkgForm.image} onChange={e=>updPkg('image',e.target.value)} placeholder="https://..."/>
+                </div>
+                <div className="form-group" style={{ gridColumn:'1 / -1' }}>
+                  <label>Includes (Comma separated)</label>
+                  <input type="text" value={pkgForm.includes} onChange={e=>updPkg('includes',e.target.value)} placeholder="Beach Resort, Breakfast, Airport Transfers..."/>
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button className="btn-ghost" onClick={() => setPkgModal(null)}>Cancel</button>
+                <button className={`btn-primary ${saving?'spinning':''}`} onClick={savePkg}>{saving ? <RefreshCw size={16}/> : 'Save Package'}</button>
+              </div>
+            </div>
+          </div>
+        )}
+
       </main>
 
-      {/* DESTINATION MODAL */}
-      {destModal && (
-        <div className="modal-overlay" onClick={e => e.target===e.currentTarget && setDestModal(null)}>
-          <div className="add-dest-modal">
-            <div className="modal-header">
-              <h2 className="modal-title">{destModal==='add' ? 'Add New Destination' : `Edit — ${destModal.name}`}</h2>
-              <button className="modal-close" onClick={() => setDestModal(null)}><X size={18}/></button>
-            </div>
-            <div className="modal-body">
-              <div className="add-dest-grid">
-                <div className="ff"><label className="field-label">Destination Name *</label><input className="field-input" placeholder="e.g. North Goa" value={destForm.name} onChange={e=>updDest('name',e.target.value)}/></div>
-                <div className="ff"><label className="field-label">Country / Region *</label><input className="field-input" placeholder="e.g. Goa, India" value={destForm.country} onChange={e=>updDest('country',e.target.value)}/></div>
-                <div className="ff"><label className="field-label">Category</label><select className="field-input" value={destForm.category} onChange={e=>updDest('category',e.target.value)}>{CATEGORIES.map(c=><option key={c} value={c}>{c}</option>)}</select></div>
-                <div className="ff"><label className="field-label">Duration</label><input className="field-input" placeholder="e.g. 5 Days" value={destForm.duration} onChange={e=>updDest('duration',e.target.value)}/></div>
-                <div className="ff"><label className="field-label">Rating (1–5)</label><input className="field-input" type="number" step="0.1" min="1" max="5" placeholder="e.g. 4.8" value={destForm.rating} onChange={e=>updDest('rating',e.target.value)}/></div>
-                <div className="ff"><label className="field-label">Badge / Tag</label><input className="field-input" placeholder="e.g. Most Popular" value={destForm.tag} onChange={e=>updDest('tag',e.target.value)}/></div>
-                <div className="ff"><label className="field-label">Image URL</label><input className="field-input" placeholder="https://images.unsplash.com/..." value={destForm.image} onChange={e=>updDest('image',e.target.value)}/></div>
-                <div className="ff add-dest-span2"><label className="field-label">Description</label><textarea className="field-input" rows={2} placeholder="Brief description..." value={destForm.description} onChange={e=>updDest('description',e.target.value)}/></div>
-                <div className="ff add-dest-span2"><label className="field-label">Highlights (comma separated)</label><input className="field-input" placeholder="e.g. Beaches, Temples, Cuisine" value={destForm.highlights} onChange={e=>updDest('highlights',e.target.value)}/></div>
-              </div>
-            </div>
-            <div className="modal-footer">
-              <button className="btn-ghost" onClick={() => setDestModal(null)}>Cancel</button>
-              <button className="btn-primary" onClick={saveDest} disabled={saving}>{saving ? <><div className="spinner"/> Saving...</> : destModal==='add' ? <><Plus size={14}/> Add Destination</> : <><Edit2 size={14}/> Update</>}</button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* PACKAGE MODAL */}
-      {pkgModal && (
-        <div className="modal-overlay" onClick={e => e.target===e.currentTarget && setPkgModal(null)}>
-          <div className="add-dest-modal">
-            <div className="modal-header">
-              <h2 className="modal-title">{pkgModal==='add' ? 'Add New Package' : `Edit — ${pkgModal.name}`}</h2>
-              <button className="modal-close" onClick={() => setPkgModal(null)}><X size={18}/></button>
-            </div>
-            <div className="modal-body">
-              <div className="add-dest-grid">
-                <div className="ff"><label className="field-label">Package Name *</label><input className="field-input" placeholder="e.g. Honeymoon Bliss" value={pkgForm.name} onChange={e=>updPkg('name',e.target.value)}/></div>
-                <div className="ff"><label className="field-label">Duration</label><input className="field-input" placeholder="e.g. 7 Days" value={pkgForm.duration} onChange={e=>updPkg('duration',e.target.value)}/></div>
-                <div className="ff"><label className="field-label">Rating</label><input className="field-input" type="number" step="0.1" min="1" max="5" placeholder="e.g. 4.9" value={pkgForm.rating} onChange={e=>updPkg('rating',e.target.value)}/></div>
-                <div className="ff"><label className="field-label">Tag / Badge</label><input className="field-input" placeholder="e.g. Honeymoon" value={pkgForm.tag} onChange={e=>updPkg('tag',e.target.value)}/></div>
-                <div className="ff"><label className="field-label">Tag Color</label>
-                  <div className="color-picker-row">
-                    {PKG_COLORS.map(c => <button key={c} className={`color-swatch ${pkgForm.color===c?'selected':''}`} style={{ background:c }} onClick={()=>updPkg('color',c)} type="button"/>)}
-                    <input className="field-input" value={pkgForm.color} onChange={e=>updPkg('color',e.target.value)} style={{ flex:1, minWidth:100 }} placeholder="#FF6B35"/>
-                  </div>
-                </div>
-                <div className="ff"><label className="field-label">Image URL</label><input className="field-input" placeholder="https://images.unsplash.com/..." value={pkgForm.image} onChange={e=>updPkg('image',e.target.value)}/></div>
-                <div className="ff add-dest-span2"><label className="field-label">Destinations (comma separated)</label><input className="field-input" placeholder="e.g. North Goa, South Goa" value={pkgForm.destinations} onChange={e=>updPkg('destinations',e.target.value)}/></div>
-                <div className="ff add-dest-span2"><label className="field-label">Includes (comma separated)</label><input className="field-input" placeholder="e.g. 5-Star Hotels, Flights, Transfers" value={pkgForm.includes} onChange={e=>updPkg('includes',e.target.value)}/></div>
-              </div>
-            </div>
-            <div className="modal-footer">
-              <button className="btn-ghost" onClick={() => setPkgModal(null)}>Cancel</button>
-              <button className="btn-primary" onClick={savePkg} disabled={saving}>{saving ? <><div className="spinner"/> Saving...</> : pkgModal==='add' ? <><Plus size={14}/> Add Package</> : <><Edit2 size={14}/> Update</>}</button>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* ENQUIRY DETAIL MODAL */}
       {viewEnquiry && (
@@ -634,7 +692,7 @@ Asquare & Co. Tours & Travels
                 <i class="fa-brands fa-whatsapp"></i> WhatsApp
               </a>
               <a
-                href={`mailto:${viewEnquiry.email}?subject=Your Asquare %26 Co. Trip Enquiry — ${encodeURIComponent(viewEnquiry.selectedPackage || '')}&body=${encodeURIComponent(emailBody(viewEnquiry))}`}
+                href={`mailto:${viewEnquiry.email}?subject=Your Asquaretravelgoa Trip Enquiry — ${encodeURIComponent(viewEnquiry.selectedPackage || '')}&body=${encodeURIComponent(emailBody(viewEnquiry))}`}
                 className="btn-primary"
               ><Mail size={14}/> Reply via Email</a>
               <a href={`tel:${viewEnquiry.phone}`} className="btn-ghost"><Phone size={14}/> Call</a>
@@ -720,6 +778,20 @@ Asquare & Co. Tours & Travels
           </div>
         </div>
       )}
+
+      {/* Logo Modal */}
+      {logoModalOpen && (
+        <div className="logo-modal-overlay" onClick={e => e.target === e.currentTarget && setLogoModalOpen(false)}>
+          <div className="logo-modal-content">
+            <img src="/logo.jpeg" alt="Asquaretravelgoa Logo" className="logo-modal-img" />
+            <div className="logo-modal-actions">
+              <button className="btn-primary" onClick={() => { setLogoModalOpen(false); navigate('/'); }}>Go to Home</button>
+              <button className="btn-ghost" onClick={() => setLogoModalOpen(false)}>Back</button>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }

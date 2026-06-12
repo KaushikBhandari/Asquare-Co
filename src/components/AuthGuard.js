@@ -18,7 +18,7 @@ export default function AuthGuard({ children }) {
   if (loading) {
     return (
       <div className="auth-guard-loading">
-        <img src="/logo.jpeg" alt="Asquare & Co." className="agl-logo-img" />
+        <img src="/logo.jpeg" alt="Asquaretravelgoa" className="agl-logo-img" />
         <div className="agl-spinner" />
         <p>Loading...</p>
       </div>

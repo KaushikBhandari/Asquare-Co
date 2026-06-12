@@ -3,10 +3,10 @@
 ═══════════════════════════════════════ */
 
 /* Layout */
-.admin-layout { display: flex; min-height: 100vh; padding-top: var(--nav-h); background: #F8F5F0; }
+.admin-layout { display: flex; min-height: 100vh; background: #F8F5F0; }
 
 /* Mobile topbar */
-.admin-mobile-topbar { display: none; position: fixed; top: var(--nav-h); left: 0; right: 0; z-index: 200; background: var(--ink); padding: 12px 20px; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); }
+.admin-mobile-topbar { display: none; position: fixed; top: 0; left: 0; right: 0; z-index: 200; background: var(--ink); padding: 12px 20px; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); }
 .admin-mobile-brand { display: flex; align-items: center; gap: 10px; }
 .admin-mobile-brand img { width: 28px; height: 28px; border-radius: 6px; object-fit: contain; }
 .admin-mobile-brand span { font-size: 15px; font-weight: 700; color: #fff; font-family: var(--font-ui); }
@@ -17,8 +17,8 @@
   width: 220px; flex-shrink: 0;
   background: var(--ink);
   display: flex; flex-direction: column;
-  height: calc(100vh - var(--nav-h));
-  position: sticky; top: var(--nav-h);
+  height: 100vh;
+  position: sticky; top: 0;
   overflow-y: auto;
 }
 .sidebar-brand { display: flex; align-items: center; gap: 12px; padding: 24px 20px 20px; border-bottom: 1px solid rgba(255,255,255,0.08); }
@@ -160,7 +160,7 @@
 .enq-message-box p { font-size: 13px; color: var(--ink-mid); font-style: italic; line-height: 1.5; margin-top: 4px; }
 
 /* Admin gate */
-.admin-gate { display: flex; align-items: center; justify-content: center; min-height: calc(100vh - var(--nav-h)); }
+.admin-gate { display: flex; align-items: center; justify-content: center; min-height: 100vh; }
 .admin-gate-card { background: #fff; border-radius: var(--r-xl); padding: 48px; text-align: center; max-width: 400px; box-shadow: var(--shadow-md); }
 .admin-gate-card h2 { font-family: var(--font-display); font-size: 26px; font-weight: 700; color: var(--ink); margin: 16px 0 10px; }
 .admin-gate-card p { font-size: 14px; color: var(--ink-soft); margin-bottom: 24px; line-height: 1.6; }
@@ -193,7 +193,7 @@
     top: 0; left: -100%; bottom: 0;
     z-index: 300;
     width: 260px;
-    padding-top: calc(var(--nav-h) + 56px);
+    padding-top: 56px;
     transition: left 0.3s var(--ease);
     height: 100vh;
   }

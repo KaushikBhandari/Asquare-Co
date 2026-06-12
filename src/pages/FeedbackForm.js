@@ -116,7 +116,7 @@ export default function FeedbackForm() {
         
         <div className="feedback-header">
           <h1 className="feedback-title">How was your trip?</h1>
-          <p className="feedback-subtitle">We'd love to hear about your experience with Asquare & Co.</p>
+          <p className="feedback-subtitle">We'd love to hear about your experience with Asquaretravelgoa</p>
         </div>
 
         <form onSubmit={handleSubmit} className="feedback-form">

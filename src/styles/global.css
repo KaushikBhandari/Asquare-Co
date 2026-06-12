@@ -1,5 +1,5 @@
 /* ══════════════════════════════════════════════════════
-   ASQUARE & CO. — GLOBAL DESIGN SYSTEM
+   ASQUARETRAVELGOA — GLOBAL DESIGN SYSTEM
    Goan Soul · World-Class Destinations
    Coral Sunset · Ocean Teal · Golden Sand
 ══════════════════════════════════════════════════════ */
@@ -55,6 +55,7 @@
 
 /* ─── Reset ─────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
 html { scroll-behavior: smooth; }
 body {
   background: var(--cream);
@@ -62,6 +63,19 @@ body {
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 ::selection { background: var(--coral); color: #fff; }
 ::-webkit-scrollbar { width: 5px; }
@@ -73,12 +87,12 @@ button { font-family: var(--font-body); cursor: pointer; }
 
 /* ─── Page padding ──────────────────────────── */
 .home-page { padding-top: var(--nav-h); }
-.page-wrap, .packages-page, .booking-page, .admin-gate { padding-top: var(--nav-h); }
+.page-wrap, .packages-page, .booking-page, .admin-gate { padding-top: var(--nav-h); padding-bottom: 80px; }
 
 /* ─── Container ─────────────────────────────── */
-.container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 40px; }
-@media (max-width: 900px) { .container { padding: 0 24px; } }
-@media (max-width: 600px) { .container { padding: 0 16px; } }
+.container { width: 100%; max-width: 1200px; margin: 0 auto; padding-inline: 40px; }
+@media (max-width: 900px) { .container { padding-inline: 24px; } }
+@media (max-width: 600px) { .container { padding-inline: 16px; } }
 
 /* ─── Buttons ───────────────────────────────── */
 .btn-primary {

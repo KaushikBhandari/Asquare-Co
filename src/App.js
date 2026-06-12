@@ -12,6 +12,14 @@ import AdminDashboard from './pages/AdminDashboard';
 import FeedbackForm from './pages/FeedbackForm';
 import ChatBot from './components/ChatBot';
 import TaxiWidget from './components/TaxiWidget';
+import Footer from './components/Footer';
+import HelpCenter from './pages/HelpCenter';
+import Cancellations from './pages/Cancellations';
+import Insurance from './pages/Insurance';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
+import CookiePolicy from './pages/CookiePolicy';
+import ContactUs from './pages/ContactUs';
 import { Toaster } from 'react-hot-toast';
 import './styles/global.css';
 
@@ -23,16 +31,26 @@ export default function App() {
           {/* AuthGuard handles sign-in wall + modal internally */}
           <AuthGuard>
             <Navbar />
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/destinations" element={<Destinations />} />
-              <Route path="/packages" element={<Packages />} />
-              <Route path="/booking" element={<BookingPage />} />
-              <Route path="/admin" element={<AdminDashboard />} />
-              <Route path="/feedback/:bookingId" element={<FeedbackForm />} />
-            </Routes>
+            <main className="main-content">
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/destinations" element={<Destinations />} />
+                <Route path="/packages" element={<Packages />} />
+                <Route path="/booking" element={<BookingPage />} />
+                <Route path="/admin" element={<AdminDashboard />} />
+                <Route path="/feedback/:bookingId" element={<FeedbackForm />} />
+                <Route path="/help-center" element={<HelpCenter />} />
+                <Route path="/cancellations" element={<Cancellations />} />
+                <Route path="/insurance" element={<Insurance />} />
+                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                <Route path="/terms-of-service" element={<TermsOfService />} />
+                <Route path="/cookie-policy" element={<CookiePolicy />} />
+                <Route path="/contact" element={<ContactUs />} />
+              </Routes>
+            </main>
             <TaxiWidget />
             <ChatBot />
+            <Footer />
           </AuthGuard>
           <Toaster
             position="top-right"

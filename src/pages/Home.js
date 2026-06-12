@@ -349,7 +349,7 @@ export default function Home() {
         <div className="container">
           <div className="why-inner">
             <div className="why-left">
-              <div className="eyebrow">Why Asquare &amp; Co.</div>
+              <div className="eyebrow">Why Asquaretravelgoa</div>
               <h2 className="display-title">Goa Experts.<br /><em>Genuine Care.</em></h2>
               <p className="section-lead">We're Goa specialists first. 15 years on the ground means we know every tide, every shack owner, every hidden trail — and we use it all to craft your perfect trip.</p>
 
@@ -434,50 +434,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── FOOTER ── */}
-      <footer className="footer">
-        <div className="container">
-          <div className="footer-top">
-            <div className="footer-brand">
-              <div className="footer-logo">
-                <img src="/logo.jpeg" alt="Asquare & Co." className="footer-logo-img" />
-                <div>
-                  <div className="footer-logo-name">Asquare <strong>&amp; Co.</strong></div>
-                  <div className="footer-logo-sub">Tours &amp; Travels · Goa Specialists</div>
-                </div>
-              </div>
-              <p className="footer-tagline">Goa's most trusted travel partner since 2009. We craft extraordinary journeys across Goa and beyond — your dream trip is our mission.</p>
-              <div className="footer-socials">
-                <a href="https://instagram.com" target="_blank" rel="noreferrer" className="social-btn"><Instagram size={16} /></a>
-                <a href="https://facebook.com" target="_blank" rel="noreferrer" className="social-btn"><Facebook size={16} /></a>
-                <a href="https://twitter.com" target="_blank" rel="noreferrer" className="social-btn"><Twitter size={16} /></a>
-                <a href="https://youtube.com" target="_blank" rel="noreferrer" className="social-btn"><Youtube size={16} /></a>
-              </div>
-            </div>
-            <div className="footer-links-grid">
-              {[
-                { heading: 'Goa Trips', links: ['North Goa', 'South Goa', 'Old Goa Heritage', 'Goa Honeymoon', 'Goa Adventure', 'Luxury Goa'] },
-                { heading: 'Beyond Goa', links: ['Kerala', 'Rajasthan', 'Maldives', 'Bali', 'Europe', 'Dubai'] },
-                { heading: 'Support', links: ['Plan My Trip', 'Help Center', 'Cancellations', 'Travel Insurance', 'Contact Us'] },
-              ].map(col => (
-                <div key={col.heading} className="footer-col">
-                  <h4 className="footer-heading">{col.heading}</h4>
-                  {col.links.map(l => <a key={l} href="#" className="footer-link">{l}</a>)}
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="footer-bottom">
-            <span>© 2026 Asquare &amp; Co. Tours &amp; Travels. All rights reserved.</span>
-            <a href="https://crelante.com" target="_blank" rel="noreferrer" className="powered-by">
-              Powered by <strong>Crelante</strong>
-            </a>
-            <div className="footer-legal">
-              {['Privacy Policy', 'Terms of Service', 'Cookie Policy'].map(l => <a key={l} href="#">{l}</a>)}
-            </div>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }

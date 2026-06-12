@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { MessageCircle, X, Send, Sparkles, ChevronDown } from 'lucide-react';
 import './ChatBot.css';
 
@@ -6,9 +7,9 @@ const pick = arr => arr[Math.floor(Math.random() * arr.length)];
 
 const RESPONSES = {
   greet: [
-    "Hey there! I'm **Luxe** ✨ — your Asquare & Co. travel genie! Planning a trip? I'm here to help you explore India and beyond! 🌍",
-    "Hi! I'm **Luxe** 🗺️ your personal travel assistant from Asquare & Co. Ask me about destinations, packages or visas!",
-    "Namaste! 🙏 I'm **Luxe**, your travel companion at Asquare & Co. Where shall we take you next?"
+    "Hey there! I'm **Luxe** ✨ — your Asquaretravelgoa travel genie! Planning a trip? I'm here to help you explore India and beyond! 🌍",
+    "Hi! I'm **Luxe** 🗺️ your personal travel assistant from Asquaretravelgoa. Ask me about destinations, packages or visas!",
+    "Namaste! 🙏 I'm **Luxe**, your travel companion at Asquaretravelgoa. Where shall we take you next?"
   ],
 
   // ── INDIA DESTINATIONS ──
@@ -50,7 +51,7 @@ const RESPONSES = {
   book: ["Ready to plan? 🎉 Click **Plan My Trip** at the top of the page! Fill in your preferences and our travel expert will call you within **2 hours** with a custom quote. Completely FREE consultation!"],
   cancel: ["Cancellation policy! ↩️\n\n✅ **Free cancellation** up to 30 days before departure\n⚠️ **50% refund** between 15–30 days\n❌ **Non-refundable** within 15 days\n\nTravel insurance available for full protection!"],
   insurance: ["Travel insurance! 🛡️ Included in all premium packages. Covers:\n\n✅ Medical emergencies\n✅ Trip cancellation\n✅ Lost baggage\n✅ Flight delays\n✅ Personal accidents"],
-  contact: ["Reach us anytime! 📞\n\n📱 **Phone:** +91 XXXXX XXXXX\n📧 **Email:** info@asquareco.com\n🕐 **Hours:** Mon–Sat, 9am–7pm\n\nOr click **Plan My Trip** and we'll call YOU within 2 hours!"],
+  contact: ["Reach us anytime! 📞\n\n📱 **Support:** +91 87671 17090 / 86685 60390\n📱 **Company:** +91 95293 38747\n📧 **Email:** info@asquaretravelgoa.com\n🕐 **Hours:** Mon–Sat, 9am–7pm\n\nOr click **Plan My Trip** and we'll call YOU within 2 hours!"],
   besttime: ["Best time to travel! 🗓️\n\n🏖️ **Goa & Beaches** — Oct to March\n🏔️ **Manali & Himachal** — Mar–Jun & Sep–Nov\n❄️ **Kashmir** — April to October\n🌿 **Kerala** — Sep to March\n🏰 **Rajasthan** — Oct to February\n🏝️ **Andaman** — Oct to May\n\nWhen are you planning to travel?"],
 
   default: [
@@ -130,9 +131,10 @@ function MessageBubble({ msg }) {
 }
 
 export default function ChatBot() {
+  const location = useLocation();
   const [open, setOpen] = useState(false);
   const [msgs, setMsgs] = useState([
-    { from: 'bot', text: "Hey! I'm **Luxe** ✈️ — your Asquare & Co. travel genie. Ask me about Indian destinations, packages or visas. Let's plan your dream trip!" }
+    { from: 'bot', text: "Hey! I'm **Luxe** ✈️ — your Asquaretravelgoa travel genie. Ask me about Indian destinations, packages or visas. Let's plan your dream trip!" }
   ]);
   const [input, setInput] = useState('');
   const [typing, setTyping] = useState(false);
@@ -158,6 +160,8 @@ export default function ChatBot() {
 
   const handleOpen = () => { setOpen(true); setUnread(0); };
 
+  if (location.pathname.startsWith('/admin')) return null;
+
   return (
     <>
       {!open && (
@@ -175,7 +179,7 @@ export default function ChatBot() {
               <div className="chat-agent-avatar"><Sparkles size={16} /></div>
               <div>
                 <div className="chat-agent-name">Luxe ✨</div>
-                <div className="chat-agent-status"><span className="online-dot" /> Online · Asquare &amp; Co.</div>
+                <div className="chat-agent-status"><span className="online-dot" /> Online · Asquaretravelgoa</div>
               </div>
             </div>
             <div className="chat-header-btns">

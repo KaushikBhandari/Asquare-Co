@@ -1,0 +1,46 @@
+.static-page {
+  padding-top: calc(var(--nav-h) + 60px);
+  padding-bottom: 80px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.static-page .display-title {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.static-content {
+  background: #fff;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+  color: var(--ink-mid);
+  line-height: 1.7;
+}
+
+.static-content h3 {
+  color: var(--ink);
+  margin-top: 30px;
+  margin-bottom: 15px;
+  font-family: var(--font-display);
+}
+
+.static-content p {
+  margin-bottom: 15px;
+}
+
+.static-content ul {
+  padding-left: 20px;
+  margin-bottom: 20px;
+}
+
+.static-content li {
+  margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+  .static-content {
+    padding: 24px;
+  }
+}
