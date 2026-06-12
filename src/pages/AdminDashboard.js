@@ -5,7 +5,7 @@ import {
   getEnquiries, updateEnquiryStatus,
   saveAdminDestination, getAdminDestinations, updateAdminDestination, deleteAdminDestination,
   saveAdminPackage, getAdminPackages, updateAdminPackage, deleteAdminPackage,
-  getUsers, getFeedback
+  getUsers, getFeedback, uploadImage
 } from '../firebase/config';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -569,8 +569,23 @@ Asquaretravelgoa Tours & Travels
                   <input type="text" value={destForm.tag} onChange={e=>updDest('tag',e.target.value)} />
                 </div>
                 <div className="form-group" style={{ gridColumn:'1 / -1' }}>
-                  <label>Image URL</label>
-                  <input type="text" value={destForm.image} onChange={e=>updDest('image',e.target.value)} placeholder="https://..."/>
+                  <label>Image URL or Upload File</label>
+                  <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                    <input type="text" value={destForm.image} onChange={e=>updDest('image',e.target.value)} placeholder="https://..." style={{ flex: 1 }}/>
+                    <input type="file" accept="image/*" onChange={async (e) => {
+                      const file = e.target.files[0];
+                      if (!file) return;
+                      toast.loading('Uploading image...', { id: 'img-upload' });
+                      try {
+                        const url = await uploadImage(file, 'destinations');
+                        updDest('image', url);
+                        toast.success('Image uploaded!', { id: 'img-upload' });
+                      } catch (err) {
+                        toast.error('Upload failed', { id: 'img-upload' });
+                      }
+                    }} style={{ flex: 1, padding: '7px' }} />
+                  </div>
+                  {destForm.image && <img src={destForm.image} alt="Preview" style={{ height: '60px', width: '90px', objectFit: 'cover', borderRadius: '6px', marginTop: '4px', border: '1px solid var(--sand)' }} />}
                 </div>
                 <div className="form-group" style={{ gridColumn:'1 / -1' }}>
                   <label>Highlights (Comma separated)</label>
@@ -611,14 +626,6 @@ Asquaretravelgoa Tours & Travels
                   <input type="text" value={pkgForm.duration} onChange={e=>updPkg('duration',e.target.value)} placeholder="e.g. 5 Days / 4 Nights"/>
                 </div>
                 <div className="form-group">
-                  <label>Price ($)</label>
-                  <input type="number" value={pkgForm.price} onChange={e=>updPkg('price',e.target.value)} />
-                </div>
-                <div className="form-group">
-                  <label>Savings / Discount ($)</label>
-                  <input type="number" value={pkgForm.savings} onChange={e=>updPkg('savings',e.target.value)} />
-                </div>
-                <div className="form-group">
                   <label>Rating (e.g. 4.9)</label>
                   <input type="number" step="0.1" value={pkgForm.rating} onChange={e=>updPkg('rating',e.target.value)} />
                 </div>
@@ -633,8 +640,23 @@ Asquaretravelgoa Tours & Travels
                   </select>
                 </div>
                 <div className="form-group" style={{ gridColumn:'1 / -1' }}>
-                  <label>Image URL</label>
-                  <input type="text" value={pkgForm.image} onChange={e=>updPkg('image',e.target.value)} placeholder="https://..."/>
+                  <label>Image URL or Upload File</label>
+                  <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                    <input type="text" value={pkgForm.image} onChange={e=>updPkg('image',e.target.value)} placeholder="https://..." style={{ flex: 1 }}/>
+                    <input type="file" accept="image/*" onChange={async (e) => {
+                      const file = e.target.files[0];
+                      if (!file) return;
+                      toast.loading('Uploading image...', { id: 'img-upload' });
+                      try {
+                        const url = await uploadImage(file, 'packages');
+                        updPkg('image', url);
+                        toast.success('Image uploaded!', { id: 'img-upload' });
+                      } catch (err) {
+                        toast.error('Upload failed', { id: 'img-upload' });
+                      }
+                    }} style={{ flex: 1, padding: '7px' }} />
+                  </div>
+                  {pkgForm.image && <img src={pkgForm.image} alt="Preview" style={{ height: '60px', width: '90px', objectFit: 'cover', borderRadius: '6px', marginTop: '4px', border: '1px solid var(--sand)' }} />}
                 </div>
                 <div className="form-group" style={{ gridColumn:'1 / -1' }}>
                   <label>Includes (Comma separated)</label>

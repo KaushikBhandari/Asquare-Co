@@ -42,6 +42,12 @@
 .bk-panel-title em { color: var(--coral); font-style: italic; }
 .bk-panel-desc { font-size: 14px; color: var(--ink-soft); }
 
+/* Trip Tabs */
+.trip-tabs { display: flex; gap: 12px; margin-top: 18px; }
+.trip-tab { padding: 10px 20px; border-radius: var(--r-full); border: 1px solid var(--sand); background: var(--cream); font-size: 14px; font-weight: 600; color: var(--ink-mid); cursor: pointer; transition: all 0.3s var(--ease); font-family: var(--font-ui); }
+.trip-tab.active { background: var(--coral); color: #fff; border-color: var(--coral); box-shadow: 0 4px 10px var(--coral-glow); }
+.trip-tab:hover:not(.active) { border-color: var(--coral-light); color: var(--coral); }
+
 /* Trip grid */
 .trip-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 16px; }
 .trip-tile { border-radius: var(--r-lg); overflow: hidden; cursor: pointer; border: 2.5px solid transparent; transition: all 0.25s var(--ease); }

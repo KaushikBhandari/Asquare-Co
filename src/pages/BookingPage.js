@@ -64,12 +64,12 @@ export default function BookingPage() {
   const [loading, setLoading] = useState(false);
   const [showGate, setShowGate] = useState(false);
   const [enquiryRef, setEnquiryRef] = useState(null);
+  const [activeTab, setActiveTab] = useState('destinations');
 
   const [form, setForm] = useState({
     firstName: '', lastName: '', email: '', phone: '', whatsapp: '', city: '',
     departureDate: '', returnDate: '', travelers: '2',
     tripType: 'Leisure / Holiday', roomType: 'Deluxe Room',
-    budget: 'Flexible',
     message: '',
     newsletter: true,
   });
@@ -88,11 +88,6 @@ export default function BookingPage() {
   const { destinations } = useAllDestinations();
   const { packages } = useAllPackages();
   const upd = (k, v) => setForm(f => ({ ...f, [k]: v }));
-
-  const ALL_ITEMS = [
-    ...packages.map(p => ({ ...p, _type: 'package' })),
-    ...destinations.map(d => ({ ...d, _type: 'destination' })),
-  ];
 
   const handleSendEnquiry = async () => {
     if (!form.firstName || !form.email || !form.phone) {
@@ -138,7 +133,6 @@ export default function BookingPage() {
       travelers:            s(form.travelers),
       tripType:             s(form.tripType),
       roomType:             s(form.roomType),
-      budget:               s(form.budget),
       customerMessage:      s(form.message, 'No special requests'),
       newsletter:           form.newsletter ?? true,
       submittedAt:          new Date().toISOString(),
@@ -255,29 +249,36 @@ try {
               <div className="bk-panel-header">
                 <h2 className="bk-panel-title">Choose Your <em>Trip</em></h2>
                 <p className="bk-panel-desc">Select a package or destination you're interested in</p>
+                <div className="trip-tabs">
+                  <button className={`trip-tab ${activeTab === 'destinations' ? 'active' : ''}`} onClick={() => setActiveTab('destinations')}>Destinations</button>
+                  <button className={`trip-tab ${activeTab === 'packages' ? 'active' : ''}`} onClick={() => setActiveTab('packages')}>Packages</button>
+                </div>
               </div>
               <div className="trip-grid">
-                {ALL_ITEMS.slice(0, 9).map(it => (
+                {(activeTab === 'destinations' ? destinations : packages).map(it => {
+                  const enhancedIt = { ...it, _type: activeTab === 'destinations' ? 'destination' : 'package' };
+                  return (
                   <div
-                    key={it.id}
-                    className={`trip-tile ${item?.id === it.id ? 'selected' : ''}`}
-                    onClick={() => { setItem(it); setItemType(it._type); setStep(1); }}
+                    key={enhancedIt.id}
+                    className={`trip-tile ${item?.id === enhancedIt.id ? 'selected' : ''}`}
+                    onClick={() => { setItem(enhancedIt); setItemType(enhancedIt._type); setStep(1); }}
                   >
                     <div className="trip-tile-img">
-                      <img src={it.image} alt={it.name} loading="lazy" />
+                      <img src={enhancedIt.image} alt={enhancedIt.name} loading="lazy" />
                       <div className="trip-tile-dim" />
-                      {it._type === 'package' && <span className="trip-tile-badge">Package</span>}
-                      {item?.id === it.id && <div className="trip-tile-check"><Check size={15} strokeWidth={3} /></div>}
+                      {enhancedIt._type === 'package' && <span className="trip-tile-badge">Package</span>}
+                      {item?.id === enhancedIt.id && <div className="trip-tile-check"><Check size={15} strokeWidth={3} /></div>}
                     </div>
                     <div className="trip-tile-footer">
-                      <span className="trip-tile-name">{it.name}</span>
-                      {it.duration && <span className="trip-tile-dur">{it.duration}</span>}
+                      <span className="trip-tile-name">{enhancedIt.name}</span>
+                      {enhancedIt.duration && <span className="trip-tile-dur">{enhancedIt.duration}</span>}
                     </div>
                   </div>
-                ))}
+                  )
+                })}
               </div>
-              <p style={{textAlign:'center', fontSize:13, color:'var(--ink-soft)', marginTop:8}}>
-                Tap any destination or package to continue
+              <p style={{textAlign:'center', fontSize:13, color:'var(--ink-soft)', marginTop:16}}>
+                Tap any {activeTab === 'destinations' ? 'destination' : 'package'} to continue
               </p>
             </div>
           )}
@@ -356,12 +357,6 @@ try {
                         <label className="field-label">Room Preference</label>
                         <select className="field-input" value={form.roomType} onChange={e => upd('roomType', e.target.value)}>
                           {ROOM_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
-                        </select>
-                      </div>
-                      <div className="ff">
-                        <label className="field-label">Budget per Person</label>
-                        <select className="field-input" value={form.budget} onChange={e => upd('budget', e.target.value)}>
-                          {BUDGETS.map(b => <option key={b} value={b}>{b}</option>)}
                         </select>
                       </div>
                     </div>
@@ -465,7 +460,6 @@ try {
                         ['Travelers',  `${form.travelers} ${form.travelers > 1 ? 'People' : 'Person'}`],
                         ['Trip Type',  form.tripType],
                         ['Room',       form.roomType],
-                        ['Budget',     form.budget],
                       ].map(([l, v]) => (
                         <div key={l} className="review-row">
                           <span className="review-row-label">{l}</span>

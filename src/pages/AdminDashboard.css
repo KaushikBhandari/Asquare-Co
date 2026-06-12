@@ -145,10 +145,18 @@
 .content-sub-title span { font-size: 13px; color: var(--ink-soft); font-family: var(--font-ui); font-weight: 400; }
 
 /* Modals */
-.add-dest-modal { background: #fff; border-radius: var(--r-xl); max-width: 700px; width: 100%; max-height: 90vh; display: flex; flex-direction: column; box-shadow: var(--shadow-lg); overflow: hidden; }
+.admin-modal, .add-dest-modal { background: #fff; border-radius: var(--r-xl); max-width: 700px; width: 100%; max-height: 90vh; display: flex; flex-direction: column; box-shadow: var(--shadow-lg); overflow: auto; }
 .enquiry-detail-modal { background: #fff; border-radius: var(--r-xl); max-width: 580px; width: 100%; max-height: 90vh; display: flex; flex-direction: column; box-shadow: var(--shadow-lg); overflow: hidden; }
 .add-dest-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .add-dest-span2 { grid-column: 1 / -1; }
+
+/* Admin Modal Forms */
+.admin-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 20px; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-group label { font-size: 12px; font-weight: 600; color: var(--ink-mid); font-family: var(--font-ui); }
+.form-group input, .form-group select, .form-group textarea { padding: 10px 12px; border: 1px solid var(--sand); border-radius: var(--r-md); font-size: 14px; font-family: var(--font-ui); color: var(--ink); background: #fff; transition: border-color 0.2s; }
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--coral); }
+.form-group textarea { resize: vertical; min-height: 80px; }
 .color-picker-row { display: flex; align-items: center; gap: 6px; }
 .color-swatch { width: 26px; height: 26px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: transform 0.15s; flex-shrink: 0; }
 .color-swatch.selected { border-color: var(--ink); transform: scale(1.15); }
