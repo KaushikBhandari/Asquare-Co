@@ -343,9 +343,14 @@ try {
                       </div>
                       <div className="ff">
                         <label className="field-label">No. of Travelers</label>
-                        <select className="field-input" value={form.travelers} onChange={e => upd('travelers', e.target.value)}>
-                          {[1,2,3,4,5,6,7,8,9,10].map(n => <option key={n} value={n}>{n} {n===1?'Person':'People'}</option>)}
-                        </select>
+                        <input 
+                          type="number" 
+                          min="1" 
+                          className="field-input" 
+                          placeholder="No. of travelers" 
+                          value={form.travelers} 
+                          onChange={e => upd('travelers', e.target.value)} 
+                        />
                       </div>
                       <div className="ff">
                         <label className="field-label">Trip Type</label>

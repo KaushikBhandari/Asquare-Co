@@ -157,9 +157,14 @@ export default function Home() {
               </div>
               <div className="sf">
                 <label className="field-label"><Users size={11} /> Travelers</label>
-                <select className="field-input" value={travelers} onChange={e => setTravelers(e.target.value)}>
-                  {[1, 2, 3, 4, 5, 6].map(n => <option key={n} value={n}>{n} {n === 1 ? 'Person' : 'People'}</option>)}
-                </select>
+                <input 
+                  type="number" 
+                  min="1" 
+                  className="field-input" 
+                  placeholder="No. of travelers" 
+                  value={travelers} 
+                  onChange={e => setTravelers(e.target.value)} 
+                />
               </div>
               <button className="search-go btn-primary" onClick={handleSearch}>
                 <Search size={17} /> Search Trips
