@@ -3,8 +3,8 @@
 .footer-top { display: flex; justify-content: space-between; gap: 60px; margin-bottom: 44px; flex-wrap: wrap; }
 .footer-brand { flex: 1; min-width: 280px; max-width: 500px; display: flex; flex-direction: column; gap: 16px; }
 .footer-logo { display: flex; align-items: center; gap: 12px; }
-.footer-logo-img { width: 42px; height: 42px; border-radius: var(--r-md); object-fit: contain; }
-.footer-logo-name { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #fff; }
+.footer-logo-img { width: 60px; height: 60px; border-radius: var(--r-md); object-fit: contain; }
+.footer-logo-name { font-family: var(--font-display); font-size: 26px; font-weight: 700; color: #fff; }
 .footer-logo-sub { font-size: 11px; color: rgba(255,255,255,0.4); font-family: var(--font-ui); }
 .footer-tagline { font-size: 13px; color: rgba(255,255,255,0.52); line-height: 1.7; }
 .footer-socials { display: flex; gap: 8px; }

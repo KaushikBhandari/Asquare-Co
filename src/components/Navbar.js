@@ -79,7 +79,7 @@ export default function Navbar() {
           <div className="nav-logo" onClick={() => { setMenuOpen(false); setLogoModalOpen(true); }} style={{ cursor: 'pointer' }}>
             <img src="/logo.jpeg" alt="Asquaretravelgoa" className="nav-logo-img" />
             <div className="nav-logo-text">
-              <span className="nav-logo-name"><strong>Asquaretravelgoa</strong></span>
+              <span className="nav-logo-name"><strong>AsquareTravelGoa</strong></span>
               <span className="nav-logo-sub">
                 Tours &amp; Travels
                 <span className="nav-logo-goa">GOA</span>

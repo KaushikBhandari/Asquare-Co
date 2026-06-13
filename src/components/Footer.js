@@ -17,7 +17,7 @@ export default function Footer() {
             <div className="footer-logo">
               <img src="/logo.jpeg" alt="Asquaretravelgoa" className="footer-logo-img" />
               <div>
-                <div className="footer-logo-name"><strong>Asquaretravelgoa</strong></div>
+                <div className="footer-logo-name"><strong>AsquareTravelGoa</strong></div>
                 <div className="footer-logo-sub">Tours &amp; Travels · Goa Specialists</div>
               </div>
             </div>

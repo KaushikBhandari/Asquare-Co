@@ -9,9 +9,9 @@ export const packages = [];
 export const testimonials = [];
 
 export const stats = [
-  { value: 50000, label: 'Happy Travelers', suffix: '+', icon: '😊' },
-  { value: 2000, label: 'Goa Trips Planned', suffix: '+', icon: '🌴' },
-  { value: 15, label: 'Years in Goa', suffix: '', icon: '🏆' },
+  { value: 10000, label: 'Happy Travelers', suffix: '+', icon: '😊' },
+  { value: 1000, label: 'Goa Trips Planned', suffix: '+', icon: '🌴' },
+  { value: 5, label: 'Years in Goa', suffix: '', icon: '🏆' },
   { value: 98, label: 'Satisfaction %', suffix: '%', icon: '⭐' },
 ];
 

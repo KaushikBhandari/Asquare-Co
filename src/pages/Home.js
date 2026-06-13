@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { testimonials, stats, goaExperiences } from '../data/travelData';
 import { useAllDestinations, useAllPackages } from '../hooks/useAllData';
 import { Search, MapPin, Calendar, Users, ArrowRight, Star, Check, Shield, Headphones, Award, ChevronLeft, ChevronRight, Plane, Heart } from 'lucide-react';
+import CustomTripForm from '../components/CustomTripForm';
 import './Home.css';
 import { Instagram, Facebook, Twitter, Youtube } from 'lucide-react';
 
@@ -243,29 +244,42 @@ export default function Home() {
             <Link to="/destinations" className="btn-ghost">See All <ArrowRight size={14} /></Link>
           </div>
 
-          <div className="dest-bento">
-            {destinations.slice(0, 6).map((d, i) => (
-              <div key={d.id} className={`dest-tile tile-${i}`}>
-                <img src={d.image} alt={d.name} loading="lazy" />
-                <div className="dest-tile-overlay" />
-                <button
-                  className={`wish-btn ${wishlist.includes(d.id) ? 'wished' : ''}`}
-                  onClick={() => toggleWish(d.id)}
-                >
-                  <Heart size={14} fill={wishlist.includes(d.id) ? 'currentColor' : 'none'} />
-                </button>
-                <div className="dest-tile-tag">{d.tag}</div>
-                <div className="dest-tile-info">
-                  <div className="dest-tile-country"><MapPin size={10} /> {d.country}</div>
-                  <h3 className="dest-tile-name">{d.name}</h3>
-                  <div className="dest-tile-row">
-                    <Link to="/booking" state={{ destination: d }} className="tile-book-btn">
-                      Book <ArrowRight size={11} />
-                    </Link>
+          {destinations.length > 0 && (
+            <div className="dest-bento">
+              {destinations.slice(0, 6).map((d, i) => (
+                <div key={d.id} className={`dest-tile tile-${i}`}>
+                  <img src={d.image} alt={d.name} loading="lazy" />
+                  <div className="dest-tile-overlay" />
+                  <button
+                    className={`wish-btn ${wishlist.includes(d.id) ? 'wished' : ''}`}
+                    onClick={() => toggleWish(d.id)}
+                  >
+                    <Heart size={14} fill={wishlist.includes(d.id) ? 'currentColor' : 'none'} />
+                  </button>
+                  <div className="dest-tile-tag">{d.tag}</div>
+                  <div className="dest-tile-info">
+                    <div className="dest-tile-country"><MapPin size={10} /> {d.country}</div>
+                    <h3 className="dest-tile-name">{d.name}</h3>
+                    <div className="dest-tile-row">
+                      <Link to="/booking" state={{ destination: d }} className="tile-book-btn">
+                        Book <ArrowRight size={11} />
+                      </Link>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+          )}
+          {destinations.length === 0 && (
+            <div className="text-center" style={{ padding: '10px 20px 20px' }}>
+              <div style={{ fontSize: 48, marginBottom: 16 }}>🌍</div>
+              <h3 style={{ fontSize: 24, fontWeight: 700, marginBottom: 8 }}>Amazing Destinations Adding Soon!</h3>
+              <p style={{ color: 'var(--ink-soft)' }}>We're currently curating the best spots for you.</p>
+            </div>
+          )}
+
+          <div>
+            <CustomTripForm />
           </div>
         </div>
       </section>
@@ -356,13 +370,13 @@ export default function Home() {
             <div className="why-left">
               <div className="eyebrow">Why Asquaretravelgoa</div>
               <h2 className="display-title">Goa Experts.<br /><em>Genuine Care.</em></h2>
-              <p className="section-lead">We're Goa specialists first. 15 years on the ground means we know every tide, every shack owner, every hidden trail — and we use it all to craft your perfect trip.</p>
+              <p className="section-lead">We're Goa specialists first. 5 years on the ground means we know every tide, every shack owner, every hidden trail — and we use it all to craft your perfect trip.</p>
 
               <div className="why-features">
                 {[
-                  { icon: <Shield size={20} />, color: '#FF5722', title: '15 Years of Expertise', desc: 'Goa specialists since 2009 — we know every hidden beach, shack and secret spot on the island.' },
+                  { icon: <Shield size={20} />, color: '#FF5722', title: '5 Years of Expertise', desc: 'Goa specialists since 2019 — we know every hidden beach, shack and secret spot on the island.' },
                   { icon: <Headphones size={20} />, color: '#00897B', title: '24/7 Goa Helpline', desc: 'Our on-ground Goa team is always reachable. Pre-trip or mid-trip, we\'ve got you.' },
-                  { icon: <Award size={20} />, color: '#F9A825', title: 'Goa\'s #1 Specialist', desc: 'Voted Best Goa Travel Agency 4 years running. 2,000+ trips. 98% satisfaction.' },
+                  { icon: <Award size={20} />, color: '#F9A825', title: 'Goa\'s #1 Specialist', desc: 'Voted Best Goa Travel Agency 4 years running. 1,000+ trips. 98% satisfaction.' },
                   { icon: <Check size={20} />, color: '#3949AB', title: 'Free Cancellation', desc: 'Cancel up to 15 days before — no fees, full refund. Travel worry-free.' },
                 ].map(f => (
                   <div className="why-feat" key={f.title}>

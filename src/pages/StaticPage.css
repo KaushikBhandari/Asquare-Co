@@ -39,8 +39,18 @@
   margin-bottom: 10px;
 }
 
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 40px;
+}
+
 @media (max-width: 768px) {
   .static-content {
     padding: 24px;
+  }
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
   }
 }

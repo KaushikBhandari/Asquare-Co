@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAllDestinations, useAllPackages } from '../hooks/useAllData';
 import { MapPin, Clock, Check, ArrowRight, Star } from 'lucide-react';
+import CustomTripForm from '../components/CustomTripForm';
 import './Packages.css';
 
 export default function Packages() {
@@ -66,7 +67,7 @@ export default function Packages() {
         {(activeFilter === 'all' || activeFilter === 'goa') && (
           <div className="goa-pkg-hero">
             <div className="goa-pkg-hero-text">
-              <div className="goa-pkg-hero-eyebrow">Goa's #1 Specialist — 15 Years Experience</div>
+              <div className="goa-pkg-hero-eyebrow">Goa's #1 Specialist — 5 Years Experience</div>
               <h2 className="goa-pkg-hero-title">Goa Packages <em>Built Different.</em></h2>
               <p className="goa-pkg-hero-sub">We know every secret beach, hidden shack, and magical sunset spot. Our Goa packages are crafted from real experience — not Google searches.</p>
             </div>
@@ -83,45 +84,53 @@ export default function Packages() {
         </div>
 
         {/* Package cards — NO pricing */}
-        <div className="featured-pkgs">
-          {filteredPackages.map((pkg, i) => (
-            <div key={pkg.id} className="feat-pkg-card" style={{ animationDelay: `${i * 0.1}s` }}>
-              <div className="fpkg-img">
-                <img src={pkg.image} alt={pkg.name} />
-                <div className="fpkg-tags">
-                  <span className="fpkg-tag" style={{ background: pkg.color }}>{pkg.tag}</span>
+        {filteredPackages.length > 0 ? (
+          <div className="featured-pkgs">
+            {filteredPackages.map((pkg, i) => (
+              <div key={pkg.id} className="feat-pkg-card" style={{ animationDelay: `${i * 0.1}s` }}>
+                <div className="fpkg-img">
+                  <img src={pkg.image} alt={pkg.name} />
+                  <div className="fpkg-tags">
+                    <span className="fpkg-tag" style={{ background: pkg.color }}>{pkg.tag}</span>
+                  </div>
+                  <div className="fpkg-img-overlay" />
                 </div>
-                <div className="fpkg-img-overlay" />
+                <div className="fpkg-body">
+                  <div>
+                    <div className="fpkg-dests">
+                      {pkg.destinations.map(d => (
+                        <span key={d} className="fpkg-dest"><MapPin size={9} /> {d}</span>
+                      ))}
+                    </div>
+                    <h3 className="fpkg-name">{pkg.name}</h3>
+                    <div className="fpkg-meta">
+                      <span className="fpkg-meta-item"><Clock size={12} /> {pkg.duration}</span>
+                      <span className="fpkg-meta-item"><Star size={12} fill="#F9A825" style={{ color: '#F9A825' }} /> {pkg.rating}</span>
+                      <span className="tag-all-inc">All Inclusive</span>
+                    </div>
+                    <div className="fpkg-includes">
+                      {pkg.includes.map(inc => (
+                        <div key={inc} className="fpkg-inc"><Check size={11} /> {inc}</div>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="fpkg-footer">
+                    <div className="fpkg-contact-note">Contact us for pricing & availability</div>
+                    <Link to="/booking" state={{ package: pkg }} className="btn-primary fpkg-btn">
+                      Enquire Now <ArrowRight size={14} />
+                    </Link>
+                  </div>
+                </div>
               </div>
-              <div className="fpkg-body">
-                <div>
-                  <div className="fpkg-dests">
-                    {pkg.destinations.map(d => (
-                      <span key={d} className="fpkg-dest"><MapPin size={9} /> {d}</span>
-                    ))}
-                  </div>
-                  <h3 className="fpkg-name">{pkg.name}</h3>
-                  <div className="fpkg-meta">
-                    <span className="fpkg-meta-item"><Clock size={12} /> {pkg.duration}</span>
-                    <span className="fpkg-meta-item"><Star size={12} fill="#F9A825" style={{ color: '#F9A825' }} /> {pkg.rating}</span>
-                    <span className="tag-all-inc">All Inclusive</span>
-                  </div>
-                  <div className="fpkg-includes">
-                    {pkg.includes.map(inc => (
-                      <div key={inc} className="fpkg-inc"><Check size={11} /> {inc}</div>
-                    ))}
-                  </div>
-                </div>
-                <div className="fpkg-footer">
-                  <div className="fpkg-contact-note">Contact us for pricing & availability</div>
-                  <Link to="/booking" state={{ package: pkg }} className="btn-primary fpkg-btn">
-                    Enquire Now <ArrowRight size={14} />
-                  </Link>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="no-results" style={{ textAlign: 'center', padding: '60px 20px', background: '#fff', borderRadius: '24px', border: '1px solid var(--sand)' }}>
+            <div style={{ fontSize: 48, marginBottom: 16 }}>🌴</div>
+            <h3 style={{ fontSize: 24, fontWeight: 700, marginBottom: 8 }}>Amazing Packages Adding Soon!</h3>
+            <p style={{ color: 'var(--ink-soft)' }}>We're currently curating the best packages for you.</p>
+          </div>
+        )}
 
         {/* Individual Destinations */}
         <div className="pkg-section-label" style={{ marginTop: 64 }}>
@@ -129,28 +138,37 @@ export default function Packages() {
           <h2 className="display-title">Pick Your <em className="teal-em">Paradise</em></h2>
         </div>
 
-        <div className="single-dest-grid">
-          {destinations.map(d => (
-            <div key={d.id} className="sd-card">
-              <div className="sd-img-wrap">
-                <img src={d.image} alt={d.name} loading="lazy" />
-                <span className="sd-badge" style={{ background: d.category === 'Goa' ? 'var(--coral)' : 'var(--teal)' }}>{d.tag}</span>
-                {d.category === 'Goa' && <span className="sd-goa-badge">Goa</span>}
-              </div>
-              <div className="sd-body">
-                <div className="sd-loc"><MapPin size={9} /> {d.country}</div>
-                <h4 className="sd-name">{d.name}</h4>
-                <div className="sd-meta">
-                  <Star size={11} fill="#F9A825" style={{ color: '#F9A825' }} /> {d.rating}
-                  <span>· {d.duration}</span>
+        {destinations.length > 0 ? (
+          <div className="single-dest-grid">
+            {destinations.map(d => (
+              <div key={d.id} className="sd-card">
+                <div className="sd-img-wrap">
+                  <img src={d.image} alt={d.name} loading="lazy" />
+                  <span className="sd-badge" style={{ background: d.category === 'Goa' ? 'var(--coral)' : 'var(--teal)' }}>{d.tag}</span>
+                  {d.category === 'Goa' && <span className="sd-goa-badge">Goa</span>}
                 </div>
-                <Link to="/booking" state={{ destination: d }} className="sd-enquire-btn">
-                  Enquire <ArrowRight size={11} />
-                </Link>
+                <div className="sd-body">
+                  <div className="sd-loc"><MapPin size={9} /> {d.country}</div>
+                  <h4 className="sd-name">{d.name}</h4>
+                  <div className="sd-meta">
+                    <Star size={11} fill="#F9A825" style={{ color: '#F9A825' }} /> {d.rating}
+                    <span>· {d.duration}</span>
+                  </div>
+                  <Link to="/booking" state={{ destination: d }} className="sd-enquire-btn">
+                    Enquire <ArrowRight size={11} />
+                  </Link>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="no-results" style={{ textAlign: 'center', padding: '40px 20px', background: '#fff', borderRadius: '24px', border: '1px solid var(--sand)' }}>
+            <p style={{ color: 'var(--ink-soft)' }}>More destinations adding soon!</p>
+          </div>
+        )}
+
+        {/* ── CUSTOM TRIP FORM ── */}
+        <CustomTripForm />
 
       </div>
     </div>

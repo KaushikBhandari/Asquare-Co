@@ -26,13 +26,13 @@
   text-decoration: none; flex-shrink: 0;
 }
 .nav-logo-img {
-  width: 36px; height: 36px;
+  width: 56px; height: 56px;
   border-radius: 8px; object-fit: contain;
 }
 .nav-logo-text { display: flex; flex-direction: column; }
 .nav-logo-name {
   font-family: var(--font-display);
-  font-size: 16px; font-weight: 700; color: var(--ink); line-height: 1.2;
+  font-size: 26px; font-weight: 700; color: var(--ink); line-height: 1.2;
 }
 .nav-logo-sub {
   font-size: 9px; color: var(--ink-soft);
@@ -278,5 +278,5 @@
 
 @media (max-width: 480px) {
   .nav-logo-sub { display: none; }
-  .nav-logo-name { font-size: 15px; }
+  .nav-logo-name { font-size: 18px; }
 }

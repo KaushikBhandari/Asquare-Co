@@ -1,0 +1,133 @@
+.custom-trip-section {
+  padding: 20px 0;
+  background: transparent;
+  display: flex;
+  justify-content: center;
+}
+
+.custom-trip-container {
+  max-width: 800px;
+  width: 100%;
+  background: #fff;
+  border-radius: 24px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  border: 1px solid var(--sand);
+}
+
+.custom-trip-header {
+  background: var(--ink);
+  color: #fff;
+  padding: 40px;
+  text-align: center;
+}
+
+.custom-trip-eyebrow {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--coral);
+  margin-bottom: 12px;
+}
+
+.custom-trip-title {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.custom-trip-subtitle {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.6;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.custom-trip-body {
+  padding: 40px;
+}
+
+.custom-trip-row {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.custom-trip-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.custom-trip-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+
+.custom-trip-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.custom-trip-icon {
+  position: absolute;
+  left: 16px;
+  color: var(--ink-soft);
+}
+
+.custom-trip-input, .custom-trip-select {
+  width: 100%;
+  padding: 14px 16px 14px 44px;
+  border-radius: 12px;
+  border: 1.5px solid var(--sand);
+  background: #fff;
+  font-family: var(--font-ui);
+  font-size: 15px;
+  color: var(--ink);
+  transition: all 0.2s;
+  outline: none;
+}
+
+.custom-trip-select {
+  appearance: none;
+  cursor: pointer;
+}
+
+.custom-trip-input:focus, .custom-trip-select:focus {
+  border-color: var(--coral);
+  box-shadow: 0 0 0 4px var(--coral-pale);
+}
+
+.custom-trip-submit {
+  width: 100%;
+  padding: 16px;
+  font-size: 16px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+@media (max-width: 768px) {
+  .custom-trip-row {
+    flex-direction: column;
+    gap: 24px;
+  }
+  .custom-trip-header {
+    padding: 30px 20px;
+  }
+  .custom-trip-body {
+    padding: 24px 20px;
+  }
+  .custom-trip-title {
+    font-size: 26px;
+  }
+}

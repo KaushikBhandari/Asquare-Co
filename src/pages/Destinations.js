@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useAllDestinations } from '../hooks/useAllData';
 import { Link } from 'react-router-dom';
 import { Search, MapPin, Filter, Star, ArrowRight, Heart } from 'lucide-react';
+import CustomTripForm from '../components/CustomTripForm';
 import './Destinations.css';
 
 const CATS = ['All', 'Goa', 'India', 'Asia', 'Europe', 'Middle East', 'South America'];
@@ -127,10 +128,14 @@ export default function Destinations() {
         {list.length === 0 && (
           <div className="no-results">
             <div style={{ fontSize: 48 }}>🌍</div>
-            <h3>No destinations found</h3>
-            <p>Try adjusting your filters</p>
+            <h3>Amazing Destinations Adding Soon!</h3>
+            <p>We're currently curating the best spots for you.</p>
           </div>
         )}
+        
+        {/* ── CUSTOM TRIP FORM ── */}
+        <CustomTripForm />
+
       </div>
     </div>
   );

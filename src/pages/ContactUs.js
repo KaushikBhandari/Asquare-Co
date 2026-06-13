@@ -30,7 +30,7 @@ export default function ContactUs() {
         Have a question or need help planning your trip? We're here for you!
       </p>
 
-      <div className="contact-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1.5fr', gap: '40px' }}>
+      <div className="contact-grid">
         
         {/* Left Side: Info */}
         <div className="contact-info">
