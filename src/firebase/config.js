@@ -10,22 +10,24 @@
 // 6. Enable Firestore Database (start in test mode)
 
 import { initializeApp } from 'firebase/app';
+import { getAnalytics } from 'firebase/analytics';
 import { getAuth, GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from 'firebase/auth';
 import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, query, orderBy, serverTimestamp, setDoc, getDoc } from 'firebase/firestore';
 
 // ⚠️  REPLACE WITH YOUR FIREBASE CONFIG ⚠️
 const firebaseConfig = {
-  apiKey: "AIzaSyDCspl0JjvJJH03lVfQsq6e8eIGBle85Cs",
-  authDomain: "asquare-dcb81.firebaseapp.com",
-  projectId: "asquare-dcb81",
-  storageBucket: "asquare-dcb81.firebasestorage.app",
-  messagingSenderId: "277935244668",
-  appId: "1:277935244668:web:26c94ccecb54d547c790f9",
-  measurementId: "G-93KBDF97MS"
+  apiKey: "AIzaSyDlvHXZIAUqTamvkptij6hCt-nMckB1roE",
+  authDomain: "asquare-d5fec.firebaseapp.com",
+  projectId: "asquare-d5fec",
+  storageBucket: "asquare-d5fec.firebasestorage.app",
+  messagingSenderId: "279327939376",
+  appId: "1:279327939376:web:5048fee8be0ecdcc2c86f5",
+  measurementId: "G-6MW881X4VP"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+export const analytics = getAnalytics(app);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const googleProvider = new GoogleAuthProvider();
