@@ -31,7 +31,7 @@ export default function Footer() {
                 <span style={{ fontFamily: 'var(--font-display)', fontSize: '22px', fontWeight: '700', color: '#fff', letterSpacing: '0.02em' }}>Asquare & Co.</span>
               </div>
             </div>
-            <p className="footer-tagline">Goa's most trusted travel partner since 2009. We craft extraordinary journeys across Goa and beyond — your dream trip is our mission.</p>
+            <p className="footer-tagline">Your premier Goa-based travel partner. We go beyond booking trips to design unforgettable experiences and craft lifelong memories, handling all logistics so you can focus entirely on the journey.</p>
             <div className="footer-socials">
               <a href="https://www.instagram.com/asquaretravelgoa?igsh=bWdmNzRlZWQ2aXcw" target="_blank" rel="noreferrer" className="social-btn" aria-label="Instagram"><Instagram size={16} /></a>
               <a href="https://www.facebook.com/share/1JEQczXjQ3/?mibextid=wwXIfr" target="_blank" rel="noreferrer" className="social-btn" aria-label="Facebook"><Facebook size={16} /></a>
