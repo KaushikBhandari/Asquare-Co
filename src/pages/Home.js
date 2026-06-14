@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { testimonials, stats, goaExperiences } from '../data/travelData';
 import { useAllDestinations, useAllPackages } from '../hooks/useAllData';
-import { Search, MapPin, Calendar, Users, ArrowRight, Star, Check, Shield, Headphones, Award, ChevronLeft, ChevronRight, Plane, Heart } from 'lucide-react';
+import { Search, MapPin, Calendar, Users, ArrowRight, Star, Check, Shield, Headphones, Award, ChevronLeft, ChevronRight, Plane, Heart, Briefcase, GraduationCap, Compass, CheckCircle, Sparkles } from 'lucide-react';
 import CustomTripForm from '../components/CustomTripForm';
 import './Home.css';
 import { Instagram, Facebook, Twitter, Youtube } from 'lucide-react';
@@ -58,12 +58,14 @@ const HERO_SLIDES = [
 export default function Home() {
   const navigate = useNavigate();
   const [slide, setSlide] = useState(0);
+  const [logoModalOpen, setLogoModalOpen] = useState(false);
   const [to, setTo] = useState('');
   const [date, setDate] = useState('');
   const [travelers, setTravelers] = useState(2);
   const [tIdx, setTIdx] = useState(0);
   const [statsRef, statsInView] = useInView();
   const [wishlist, setWishlist] = useState([]);
+  const [showIntroMore, setShowIntroMore] = useState(false);
 
   useEffect(() => {
     const t = setInterval(() => setSlide(i => (i + 1) % HERO_SLIDES.length), 5500);
@@ -177,6 +179,155 @@ export default function Home() {
               ))}
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* ── INTRO / ABOUT US ── */}
+      <section className="intro-section">
+        <div className="container">
+          <div className="intro-grid">
+            <div className="intro-visuals">
+              <div className="intro-img-wrapper img-1">
+                <img src="https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=800&q=80" alt="Goa Beach" />
+              </div>
+              <div className="intro-img-wrapper img-2">
+                <img src="https://images.unsplash.com/photo-1587922546307-776227941871?w=800&q=80" alt="South Goa" />
+              </div>
+              <div className="intro-experience-badge">
+                <span className="badge-number">5+</span>
+                <span className="badge-text">Years of<br/>Excellence</span>
+              </div>
+            </div>
+
+            <div className="intro-content-new">
+              <div className="eyebrow" style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap', marginBottom: '16px' }}>
+                <span>Discover Our Story</span>
+                <span className="enterprise-badge">
+                  <span style={{ opacity: 0.8 }}>A proud enterprise of</span>
+                  <img src="/logo2.png" alt="Asquare & Co." style={{ height: '32px', objectFit: 'contain', cursor: 'zoom-in' }} onClick={() => setLogoModalOpen(true)} />
+                </span>
+              </div>
+              <h2 className="display-title" style={{marginBottom: '12px'}}>Welcome to <br/><em>Asquaretour&traveller</em></h2>
+              <h3 className="intro-subtitle-new">Crafting Your Memories, One Journey at a Time.</h3>
+              
+              <p className="intro-text-new">
+                Welcome to Asquaretour&traveller, your premier Goa-based travel partner. We don't just book trips—we design experiences and craft lifelong memories. Whether you are looking for a relaxing getaway, a meticulously planned corporate event, or an action-packed student adventure, we handle all the logistics so you can focus entirely on the journey.
+              </p>
+              <p className="intro-text-new">
+                Born and bred in Goa, we take immense pride in being one of the region’s most trusted travel agencies, offering round-the-clock local expertise and a seamless, stress-free travel experience across the length and breadth of India.
+              </p>
+
+              {!showIntroMore && (
+                <button className="btn-primary" style={{marginTop: '20px', padding: '14px 28px'}} onClick={() => setShowIntroMore(true)}>
+                  Discover More <ArrowRight size={16} />
+                </button>
+              )}
+            </div>
+          </div>
+
+          {showIntroMore && (
+            <div style={{ animation: 'slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards' }}>
+              <div className="bento-grid" style={{ animation: 'none' }}>
+                {/* WHAT WE DO */}
+                <div className="bento-card bento-what">
+                  <div className="bento-header">
+                    <div className="bento-icon"><Compass size={20} /></div>
+                    <h4>Our Expertise</h4>
+                  </div>
+                  <p className="bento-sub">We handle all the logistics so you can focus entirely on the journey. Here's what we do best:</p>
+                  <div className="bento-services-grid">
+                    <div className="svc-chip">
+                      <Compass size={18} className="svc-chip-icon" />
+                      <div>
+                        <strong>Customized Tours</strong>
+                        <span>Tailored exactly to your pace</span>
+                      </div>
+                    </div>
+                    <div className="svc-chip">
+                      <MapPin size={18} className="svc-chip-icon" />
+                      <div>
+                        <strong>Curated Packages</strong>
+                        <span>Professionally designed itineraries</span>
+                      </div>
+                    </div>
+                    <div className="svc-chip">
+                      <Briefcase size={18} className="svc-chip-icon" />
+                      <div>
+                        <strong>Corporate & MICE</strong>
+                        <span>Seamlessly managed retreats</span>
+                      </div>
+                    </div>
+                    <div className="svc-chip">
+                      <GraduationCap size={18} className="svc-chip-icon" />
+                      <div>
+                        <strong>Educational Travel</strong>
+                        <span>Safe, engaging student tours</span>
+                      </div>
+                    </div>
+                    <div className="svc-chip">
+                      <Plane size={18} className="svc-chip-icon" />
+                      <div>
+                        <strong>End-to-End Logistics</strong>
+                        <span>Flights, trains, and reliable transit</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* WHY CHOOSE US */}
+                <div className="bento-card bento-why">
+                  <div className="bento-header">
+                    <div className="bento-icon dark"><Award size={20} /></div>
+                    <h4 style={{color: '#fff'}}>Why Choose Us?</h4>
+                  </div>
+                  <div className="bento-why-list">
+                    <div className="bwhy-item">
+                      <div className="bwhy-top">
+                        <MapPin size={16} color="var(--coral-light)" />
+                        <h5>Proudly Goa-Based</h5>
+                      </div>
+                      <p>Deeply rooted in Goa, offering unmatched local insights and connections.</p>
+                    </div>
+                    <div className="bwhy-line" />
+                    <div className="bwhy-item">
+                      <div className="bwhy-top">
+                        <Headphones size={16} color="var(--coral-light)" />
+                        <h5>24/7 Local Support</h5>
+                      </div>
+                      <p>Dedicated assistance right here from Goa, every step of your journey.</p>
+                    </div>
+                    <div className="bwhy-line" />
+                    <div className="bwhy-item">
+                      <div className="bwhy-top">
+                        <Shield size={16} color="var(--coral-light)" />
+                        <h5>Trust & Reliability</h5>
+                      </div>
+                      <p>Transparent pricing, verified stays, and absolute priority on your safety.</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* CTA */}
+                <div className="bento-card bento-cta">
+                  <div className="bcta-content">
+                    <div>
+                      <h4>Ready to Start Your Adventure?</h4>
+                      <p>Let’s plan a journey that is uniquely yours today.</p>
+                    </div>
+                  </div>
+                  <div className="bcta-actions">
+                    <Link to="/packages" className="btn-primary" style={{background: '#fff', color: 'var(--coral)'}}>Explore Packages</Link>
+                    <Link to="/contact" className="btn-ghost" style={{borderColor: 'rgba(255,255,255,0.4)', color: '#fff'}}>Contact Us</Link>
+                  </div>
+                </div>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'center', marginTop: '40px' }}>
+                <button className="btn-ghost" style={{ padding: '12px 24px', color: 'var(--coral)', borderColor: 'var(--coral)', border: '1px solid' }} onClick={() => setShowIntroMore(false)}>
+                  <ChevronLeft size={16} /> Show Less
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
@@ -452,6 +603,15 @@ export default function Home() {
           </div>
         </div>
       </section>
+      {/* Logo Modal */}
+      {logoModalOpen && (
+        <div className="logo-modal-overlay" onClick={e => e.target === e.currentTarget && setLogoModalOpen(false)} style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(0,0,0,0.85)', zIndex: 99999, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
+          <div className="logo-modal-content" style={{ background: '#fff', padding: '24px', borderRadius: '24px', maxWidth: '90vw', maxHeight: '90vh', display: 'flex', flexDirection: 'column', gap: '20px', alignItems: 'center' }}>
+            <img src="/logo2.png" alt="Asquare & Co. Logo" style={{ maxWidth: '100%', maxHeight: '60vh', objectFit: 'contain' }} />
+            <button className="btn-ghost" onClick={() => setLogoModalOpen(false)} style={{ background: '#f3f4f6', color: '#111', padding: '10px 24px', borderRadius: '12px', fontWeight: '600', border: 'none', cursor: 'pointer' }}>← Back</button>
+          </div>
+        </div>
+      )}
 
     </div>
   );

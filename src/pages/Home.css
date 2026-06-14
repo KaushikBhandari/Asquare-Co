@@ -156,6 +156,379 @@
 }
 .stag:hover { background: var(--coral-pale); color: var(--coral); }
 
+/* ── INTRO / ABOUT US ── */
+.intro-section {
+  background: var(--cream);
+  padding: 100px 0;
+  overflow: hidden;
+}
+
+.intro-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 64px;
+  align-items: center;
+}
+
+.intro-visuals {
+  position: relative;
+  height: 540px;
+}
+
+.intro-img-wrapper {
+  position: absolute;
+  border-radius: var(--r-2xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-xl);
+}
+.intro-img-wrapper img {
+  width: 100%; height: 100%; object-fit: cover;
+}
+
+.img-1 {
+  width: 75%;
+  height: 85%;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  border: 12px solid var(--cream);
+}
+
+.img-2 {
+  width: 55%;
+  height: 65%;
+  bottom: 0;
+  right: 0;
+  z-index: 1;
+}
+
+.intro-experience-badge {
+  position: absolute;
+  bottom: 60px;
+  left: -20px;
+  background: var(--coral);
+  color: #fff;
+  padding: 24px 32px;
+  border-radius: var(--r-xl);
+  box-shadow: 0 20px 40px rgba(215, 67, 21, 0.3);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  border: 4px solid var(--cream);
+}
+.badge-number {
+  font-family: var(--font-display);
+  font-size: 48px;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.badge-text {
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.9;
+}
+.enterprise-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  background: #fff;
+  border-radius: 100px;
+  border: 1px solid rgba(215, 67, 21, 0.15);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+  color: var(--ink-soft);
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.intro-content-new {
+  max-width: 540px;
+}
+.intro-subtitle-new {
+  font-family: var(--font-ui);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--coral);
+  margin-bottom: 24px;
+}
+.intro-text-new {
+  font-size: 16px;
+  color: var(--ink-soft);
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+/* ── BENTO GRID DETAILS ── */
+.bento-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-auto-rows: minmax(min-content, auto);
+  gap: 24px;
+  margin-top: 80px;
+  animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.bento-card {
+  border-radius: var(--r-2xl);
+  padding: 48px;
+  position: relative;
+  overflow: hidden;
+}
+
+.bento-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.bento-header h4 {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--ink);
+}
+.bento-header.dark h4 {
+  color: #fff;
+}
+.bento-icon {
+  width: 48px; height: 48px;
+  border-radius: var(--r-lg);
+  background: var(--sand);
+  color: var(--coral);
+  display: flex; align-items: center; justify-content: center;
+}
+.bento-icon.dark {
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+}
+
+/* What We Do (Spans 2 columns) */
+.bento-what {
+  grid-column: span 2;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.03);
+  box-shadow: 0 12px 36px -12px rgba(0,0,0,0.06);
+}
+.bento-sub {
+  font-size: 16px;
+  color: var(--ink-soft);
+  line-height: 1.7;
+  margin-bottom: 32px;
+  max-width: 90%;
+}
+.bento-services-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.svc-chip {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px;
+  background: #fcfaf8;
+  border-radius: var(--r-lg);
+  border: 1px solid var(--sand);
+  transition: all 0.3s;
+}
+.svc-chip:hover {
+  background: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+  border-color: var(--coral-pale);
+}
+.svc-chip-icon {
+  color: var(--coral);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.svc-chip div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.svc-chip strong {
+  font-family: var(--font-ui);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+}
+.svc-chip span {
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+/* Why Choose Us (Tall, Dark Card) */
+.bento-why {
+  grid-column: span 1;
+  grid-row: span 2;
+  background: var(--ink);
+  color: #fff;
+  box-shadow: 0 24px 48px -12px rgba(20, 8, 0, 0.2);
+}
+.bento-why-list {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+.bwhy-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.bwhy-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.bwhy-top h5 {
+  font-family: var(--font-ui);
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+}
+.bwhy-item p {
+  font-size: 14px;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.6;
+  padding-left: 26px;
+}
+.bwhy-line {
+  height: 1px;
+  background: rgba(255,255,255,0.1);
+  width: 100%;
+}
+
+/* CTA */
+.bento-cta {
+  grid-column: span 2;
+  background: linear-gradient(135deg, var(--coral), #D84315);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 40px 48px;
+  box-shadow: 0 16px 32px rgba(215, 67, 21, 0.25);
+}
+.bcta-content {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.cta-icon {
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+}
+.bcta-content h4 {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+.bcta-content p {
+  font-size: 15px;
+  color: rgba(255,255,255,0.9);
+}
+.bcta-actions {
+  display: flex;
+  gap: 16px;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 1024px) {
+  .intro-grid {
+    grid-template-columns: 1fr;
+    gap: 56px;
+  }
+  .intro-visuals {
+    height: 480px;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .intro-content-new {
+    max-width: 100%;
+  }
+  .bento-grid {
+    grid-template-columns: 1fr;
+    grid-auto-rows: auto;
+  }
+  .bento-what, .bento-why, .bento-cta {
+    grid-column: span 1;
+    grid-row: auto;
+  }
+  .bento-services-grid {
+    grid-template-columns: 1fr;
+  }
+  .bento-cta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+}
+@media (max-width: 768px) {
+  .intro-section { padding: 48px 0; overflow: hidden; }
+  .intro-grid { gap: 40px; }
+  .intro-visuals { height: 280px; width: 100%; max-width: 100%; }
+  .img-1 { border-width: 6px; }
+  
+  .badge-number { font-size: 28px; }
+  .intro-experience-badge { 
+    padding: 12px 16px; 
+    left: 10px; 
+    bottom: 10px; 
+    border-width: 2px; 
+    flex-direction: row; 
+    gap: 10px; 
+    text-align: left; 
+  }
+  .badge-text { font-size: 11px; }
+  
+  .intro-content-new h2 { font-size: 32px; }
+  .intro-subtitle-new { font-size: 16px; margin-bottom: 16px; }
+  
+  .enterprise-badge {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .bento-card {
+    padding: 24px 20px;
+  }
+  .bento-cta {
+    padding: 24px 20px;
+  }
+  .bcta-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .bcta-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  .bcta-actions a {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+  .svc-chip {
+    padding: 12px;
+  }
+}
+
 /* ── MARQUEE ── */
 .marquee-strip {
   background: var(--coral); overflow: hidden;
