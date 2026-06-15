@@ -252,6 +252,115 @@ export const updateAdminDestination = async (id, data) => {
   }
 };
 
+// ── ADMIN TEMPLATES HELPERS ───────────────────────────────────
+export const saveAdminTemplate = async (template) => {
+  try {
+    const docRef = await addDoc(collection(db, 'adminTemplates'), {
+      ...template,
+      createdAt: serverTimestamp(),
+    });
+    return { id: docRef.id, error: null };
+  } catch (err) {
+    return { id: null, error: err.message };
+  }
+};
+
+export const getAdminTemplates = async () => {
+  try {
+    const q = query(collection(db, 'adminTemplates'), orderBy('createdAt', 'desc'));
+    const snap = await getDocs(q);
+    return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  } catch (err) {
+    return [];
+  }
+};
+
+export const updateAdminTemplate = async (id, data) => {
+  try {
+    await updateDoc(doc(db, 'adminTemplates', id), data);
+    return { error: null };
+  } catch (err) {
+    return { error: err.message };
+  }
+};
+
+export const deleteAdminTemplate = async (id) => {
+  try {
+    const { deleteDoc } = await import('firebase/firestore');
+    await deleteDoc(doc(db, 'adminTemplates', id));
+    return { error: null };
+  } catch (err) {
+    return { error: err.message };
+  }
+};
+
+// ── ITINERARY BUILDER HELPERS ─────────────────────────────────
+export const saveItinerary = async (itinerary) => {
+  try {
+    const docRef = await addDoc(collection(db, 'itineraries'), {
+      ...JSON.parse(JSON.stringify(itinerary)), // deep clone to remove any undefineds
+      createdAt: serverTimestamp(),
+      status: 'pending', // pending, confirmed
+    });
+    return { id: docRef.id, error: null };
+  } catch (err) {
+    console.error('saveItinerary error:', err);
+    return { id: null, error: err.message };
+  }
+};
+
+export const getItineraries = async () => {
+  try {
+    const q = query(collection(db, 'itineraries'), orderBy('createdAt', 'desc'));
+    const snap = await getDocs(q);
+    return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  } catch (err) {
+    return [];
+  }
+};
+
+export const getItineraryById = async (id) => {
+  try {
+    const snap = await getDoc(doc(db, 'itineraries', id));
+    if (snap.exists()) {
+      return { id: snap.id, ...snap.data(), error: null };
+    }
+    return { error: 'Not found' };
+  } catch (err) {
+    return { error: err.message };
+  }
+};
+
+export const updateItineraryStatus = async (id, status) => {
+  try {
+    await updateDoc(doc(db, 'itineraries', id), { status });
+    return { error: null };
+  } catch (err) {
+    return { error: err.message };
+  }
+};
+
+export const updateItinerary = async (id, itinerary) => {
+  try {
+    await updateDoc(doc(db, 'itineraries', id), {
+      ...JSON.parse(JSON.stringify(itinerary))
+    });
+    return { error: null };
+  } catch (err) {
+    return { error: err.message };
+  }
+};
+
+export const deleteItinerary = async (id) => {
+  try {
+    const { deleteDoc } = await import('firebase/firestore');
+    await deleteDoc(doc(db, 'itineraries', id));
+    return { error: null };
+  } catch (err) {
+    return { error: err.message };
+  }
+};
+
 // ── FEEDBACK HELPERS ─────────────────────────────────────────
 export const saveFeedback = async (feedbackData) => {
   try {

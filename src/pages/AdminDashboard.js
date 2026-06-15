@@ -5,17 +5,20 @@ import {
   getEnquiries, updateEnquiryStatus,
   saveAdminDestination, getAdminDestinations, updateAdminDestination, deleteAdminDestination,
   saveAdminPackage, getAdminPackages, updateAdminPackage, deleteAdminPackage,
-  getUsers, getFeedback, uploadImage
+  getUsers, getFeedback, uploadImage,
+  getAdminTemplates, getItineraries
 } from '../firebase/config';
 import { useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard, Users, MessageSquare, MapPin, Package,
   CheckCircle, RefreshCw, Globe, LogIn, ArrowRight,
   Mail, Phone, Plus, Trash2, Star, Clock, Tag, X, Edit2,
-  Eye, Calendar, Shield, TrendingUp, Send
+  Eye, Calendar, Shield, TrendingUp, Send, FileText, Map
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import FollowUpPanel from '../components/admin/FollowUpPanel';
+import TemplateLibrary from '../components/admin/TemplateLibrary';
+import ItineraryBuilder from '../components/admin/ItineraryBuilder';
 import './AdminDashboard.css';
 
 const CATEGORIES = ['Goa', 'India', 'Asia', 'Europe', 'Middle East', 'South America', 'Africa', 'Oceania'];
@@ -40,6 +43,8 @@ export default function AdminDashboard() {
   const [adminDests, setAdminDests] = useState([]);
   const [adminPkgs,  setAdminPkgs]  = useState([]);
   const [feedbacks,  setFeedbacks]  = useState([]);
+  const [adminTemplates, setAdminTemplates] = useState([]);
+  const [itineraries, setItineraries] = useState([]);
   const [loading,    setLoading]    = useState(false);
 
   const [destModal,    setDestModal]    = useState(null);
@@ -55,8 +60,8 @@ export default function AdminDashboard() {
   const fetchData = async () => {
     if (!user) return;
     setLoading(true);
-    const [enqs, usrs, adsts, apkgs, fbs] = await Promise.all([
-      getEnquiries(), getUsers(), getAdminDestinations(), getAdminPackages(), getFeedback()
+    const [enqs, usrs, adsts, apkgs, fbs, tpls, itins] = await Promise.all([
+      getEnquiries(), getUsers(), getAdminDestinations(), getAdminPackages(), getFeedback(), getAdminTemplates(), getItineraries()
     ]);
     const localEnqs = JSON.parse(localStorage.getItem('wl_enquiries') || '[]');
     const merged = [...enqs, ...localEnqs.filter(le => !enqs.find(fe => fe.id === le.id))];
@@ -65,6 +70,8 @@ export default function AdminDashboard() {
     setAdminDests(adsts);
     setAdminPkgs(apkgs);
     setFeedbacks(fbs);
+    setAdminTemplates(tpls);
+    setItineraries(itins);
     setLoading(false);
   };
 
@@ -104,6 +111,8 @@ export default function AdminDashboard() {
     { id: 'overview',      label: 'Overview',    icon: <LayoutDashboard size={15}/> },
     { id: 'enquiries',     label: `Enquiries${newEnq > 0 ? ` (${newEnq})` : ''}`, icon: <MessageSquare size={15}/> },
     { id: 'followups',     label: 'Follow-ups',  icon: <Send size={15}/> },
+    { id: 'templates',     label: 'Quick Replies',    icon: <FileText size={15}/> },
+    { id: 'itineraries',   label: 'Itineraries',  icon: <Map size={15}/> },
     { id: 'destinations',  label: 'Destinations', icon: <MapPin size={15}/> },
     { id: 'packages',      label: 'Packages',     icon: <Package size={15}/> },
     { id: 'users',         label: 'Users',        icon: <Users size={15}/> },
@@ -172,7 +181,28 @@ export default function AdminDashboard() {
     toast.success(`Marked as ${status}`);
   };
 
-  const waMsg = (e) =>
+  const [selectedTemplate, setSelectedTemplate] = useState('');
+  const [customMsg, setCustomMsg] = useState('');
+  const [draftEnquiryForItinerary, setDraftEnquiryForItinerary] = useState(null);
+
+  // Handle template selection and generate message
+  useEffect(() => {
+    if (selectedTemplate && viewEnquiry) {
+      const template = adminTemplates.find(t => t.id === selectedTemplate);
+      if (template) {
+        let msg = template.content;
+        msg = msg.replace(/\{\{clientName\}\}/g, viewEnquiry.customerName || 'Customer');
+        msg = msg.replace(/\{\{package\}\}/g, viewEnquiry.selectedPackage || 'selected package');
+        msg = msg.replace(/\{\{duration\}\}/g, viewEnquiry.packageDuration || 'the duration');
+        msg = msg.replace(/\{\{budget\}\}/g, viewEnquiry.budget || 'your budget');
+        setCustomMsg(msg);
+      }
+    } else {
+      setCustomMsg('');
+    }
+  }, [selectedTemplate, viewEnquiry, adminTemplates]);
+
+  const waMsg = (e) => customMsg ||
 `Hi ${e.firstName || e.customerName},
 
 Thank you for your enquiry with Asquaretravelgoa Tours & Travels!
@@ -186,7 +216,7 @@ Looking forward to hearing from you!
 Warm regards,
 Asquaretravelgoa Tours & Travels`;
 
-  const emailBody = (e) =>
+  const emailBody = (e) => customMsg ||
 `Hi ${e.firstName || e.customerName},
 
 Thank you for your enquiry with Asquaretravelgoa Tours & Travels!
@@ -392,14 +422,16 @@ Asquaretravelgoa Tours & Travels
                     </div>
                   </div>
                   <div className="eq-footer">
+                    <button className="btn-primary" onClick={() => { setDraftEnquiryForItinerary(e); setTab('itineraries'); }} style={{ background: '#3B82F6', borderColor: '#3B82F6' }}>
+                      <Map size={13}/> Create Itinerary
+                    </button>
                     <a href={buildWaUrl(e, waMsg(e))} target="_blank" rel="noreferrer" className="btn-primary eq-contact-btn whatsapp-btn">
                       <i class="fa-brands fa-whatsapp"></i> WhatsApp
                     </a>
                     <a
                       href={`mailto:${e.email}?subject=Your Asquaretravelgoa Trip Enquiry — ${encodeURIComponent(e.selectedPackage)}&body=${encodeURIComponent(emailBody(e))}`}
                       className="btn-primary eq-contact-btn"
-                    ><Mail size={13}/> Reply via Email</a>
-                    <a href={`tel:${e.phone}`} className="btn-ghost eq-contact-btn"><Phone size={13}/> Call</a>
+                    ><Mail size={13}/> Email</a>
                   </div>
                 </div>
               ))}</div>
@@ -414,6 +446,20 @@ Asquaretravelgoa Tours & Travels
               <h3 className="content-sub-title">Daily Follow-ups</h3>
             </div>
             <FollowUpPanel />
+          </div>
+        )}
+
+        {/* TEMPLATES */}
+        {tab === 'templates' && (
+          <div className="admin-content animate-up">
+            <TemplateLibrary templates={adminTemplates} enquiries={enquiries} fetchData={fetchData} />
+          </div>
+        )}
+
+        {/* ITINERARIES */}
+        {tab === 'itineraries' && (
+          <div className="admin-content animate-up">
+            <ItineraryBuilder itineraries={itineraries} fetchData={fetchData} draftEnquiry={draftEnquiryForItinerary} clearDraft={() => setDraftEnquiryForItinerary(null)} />
           </div>
         )}
 
@@ -676,11 +722,11 @@ Asquaretravelgoa Tours & Travels
 
       {/* ENQUIRY DETAIL MODAL */}
       {viewEnquiry && (
-        <div className="modal-overlay" onClick={e => e.target===e.currentTarget && setViewEnquiry(null)}>
+        <div className="modal-overlay" onClick={e => { if (e.target===e.currentTarget) { setViewEnquiry(null); setSelectedTemplate(''); setCustomMsg(''); }}}>
           <div className="enquiry-detail-modal">
             <div className="modal-header">
               <h2 className="modal-title">Enquiry — {viewEnquiry.customerName}</h2>
-              <button className="modal-close" onClick={() => setViewEnquiry(null)}><X size={18}/></button>
+              <button className="modal-close" onClick={() => { setViewEnquiry(null); setSelectedTemplate(''); setCustomMsg(''); }}><X size={18}/></button>
             </div>
             <div className="modal-body enq-detail-body">
               <div className="enq-detail-grid">
@@ -708,6 +754,37 @@ Asquaretravelgoa Tours & Travels
               {viewEnquiry.customerMessage && viewEnquiry.customerMessage!=='No special requests' && (
                 <div className="enq-message-box"><div className="enq-detail-label">Customer Message</div><p>"{viewEnquiry.customerMessage}"</p></div>
               )}
+
+              {/* Template Selector for Quick Reply */}
+              <div className="quick-reply-section" style={{ marginTop: '20px', backgroundColor: '#F8FAFC', padding: '15px', borderRadius: '8px', border: '1px solid #E2E8F0' }}>
+                <div style={{ fontWeight: 600, color: '#1E293B', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <FileText size={14} /> Quick Reply
+                </div>
+                {adminTemplates.length > 0 ? (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                    <select 
+                      value={selectedTemplate} 
+                      onChange={e => setSelectedTemplate(e.target.value)}
+                      style={{ padding: '8px', borderRadius: '6px', border: '1px solid #CBD5E1', width: '100%' }}
+                    >
+                      <option value="">Select a quick reply...</option>
+                      {adminTemplates.map(t => (
+                        <option key={t.id} value={t.id}>{t.name}</option>
+                      ))}
+                    </select>
+                    {customMsg && (
+                      <textarea 
+                        value={customMsg}
+                        onChange={e => setCustomMsg(e.target.value)}
+                        rows={6}
+                        style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid #CBD5E1', fontSize: '13px', resize: 'vertical' }}
+                      />
+                    )}
+                  </div>
+                ) : (
+                  <div style={{ fontSize: '13px', color: '#64748B' }}>No quick replies available. Create some in the Quick Replies tab!</div>
+                )}
+              </div>
             </div>
             <div className="modal-footer">
               <a href={buildWaUrl(viewEnquiry, waMsg(viewEnquiry))} target="_blank" rel="noreferrer" className="btn-primary whatsapp-btn">

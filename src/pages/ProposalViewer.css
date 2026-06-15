@@ -1,0 +1,598 @@
+.tf-proposal-wrapper {
+  font-family: 'Inter', sans-serif;
+  color: #1E293B;
+  background-color: #F4F5F7;
+  min-height: 100vh;
+  padding-bottom: 0;
+}
+
+.tf-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* NAVBAR */
+.tf-navbar {
+  background-color: #FFFFFF;
+  border-bottom: 1px solid #E2E8F0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.navbar-inner {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tf-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 700;
+  font-size: 18px;
+  color: #0F172A;
+}
+
+.tf-brand img {
+  height: 32px;
+  width: 32px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.tf-icon-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: 1px solid #E2E8F0;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  color: #334155;
+  transition: all 0.2s ease;
+}
+
+.tf-icon-btn:hover {
+  background-color: #F8FAFC;
+  border-color: #CBD5E1;
+}
+
+/* HERO BANNER */
+.tf-hero {
+  position: relative;
+  height: 350px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  overflow: hidden;
+  color: white;
+  margin-bottom: -50px; /* pull content up over hero */
+}
+
+.tf-hero-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+}
+
+.tf-hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.7) 100%);
+  z-index: 2;
+}
+
+.tf-hero-content {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  padding-bottom: 80px; /* leaves room for overlapping layout */
+}
+
+.tf-badge {
+  display: inline-flex;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.tf-hero-content h1 {
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 800;
+  margin-bottom: 15px;
+  line-height: 1.2;
+}
+
+.tf-hero-meta {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.tf-hero-meta span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+/* LAYOUT */
+.tf-main-layout {
+  position: relative;
+  z-index: 10;
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 30px;
+  align-items: start;
+}
+
+/* LEFT COLUMN */
+.tf-content-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* SUCCESS BANNER */
+.tf-success-banner {
+  background-color: #FFFFFF;
+  border-left: 4px solid #10B981;
+  padding: 20px;
+  border-radius: 12px;
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+}
+
+.tf-success-banner h3 {
+  color: #065F46;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.tf-success-banner p {
+  color: #047857;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* TABS */
+.tf-tabs {
+  display: flex;
+  background-color: #FFFFFF;
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  gap: 10px;
+}
+
+.tf-tab {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  background: transparent;
+  font-size: 15px;
+  font-weight: 600;
+  color: #64748B;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tf-tab:hover {
+  background-color: #F8FAFC;
+  color: #0F172A;
+}
+
+.tf-tab.active {
+  background-color: #0F172A;
+  color: white;
+}
+
+.tf-tab-content {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+}
+
+/* TIMELINE (ITINERARY) */
+.tf-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.tf-day-card-v2 {
+  display: flex;
+  background-color: #FFFFFF;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  border: 1px solid #E2E8F0;
+  transition: box-shadow 0.2s ease;
+}
+
+.tf-day-card-v2:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.tf-day-image-side {
+  width: 280px;
+  min-width: 280px;
+  position: relative;
+}
+
+.tf-day-image-side img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.tf-day-info-side {
+  flex: 1;
+  padding: 25px;
+}
+
+.tf-day-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.tf-day-badge {
+  background-color: #0F172A;
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tf-day-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #0F172A;
+  margin: 0;
+}
+
+/* MODULES */
+.tf-modules {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tf-module {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  background: transparent;
+  border: none;
+  padding: 0;
+  box-shadow: none;
+}
+
+.tf-module:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.tf-mod-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* Module Specific Colors for just the icon */
+.tf-module.flight .tf-mod-icon { color: #8B5CF6; }
+.tf-module.transfer .tf-mod-icon { color: #F59E0B; }
+.tf-module.hotel .tf-mod-icon { color: #3B82F6; }
+.tf-module.activity .tf-mod-icon { color: #10B981; }
+.tf-module.meals .tf-mod-icon { color: #EA580C; }
+
+.tf-mod-content h4 {
+  font-size: 12px;
+  font-weight: 700;
+  color: #64748B;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.tf-mod-content p {
+  font-size: 14px;
+  color: #334155;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* INC / EXC TABS */
+.tf-inc-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tf-inc-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 16px;
+  font-size: 16px;
+  color: #334155;
+  line-height: 1.5;
+}
+
+.tf-inc-list li svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* RIGHT COLUMN - SIDEBAR */
+.tf-sidebar-col {
+  position: sticky;
+  top: 84px; /* 64px navbar + 20px spacing */
+}
+
+.tf-pricing-card {
+  background: white;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  border: 1px solid #E2E8F0;
+}
+
+.tf-price-header {
+  border-bottom: 1px solid #E2E8F0;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+.tf-price-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #64748B;
+  margin-bottom: 8px;
+}
+
+.tf-price-val {
+  display: block;
+  font-size: 36px;
+  font-weight: 800;
+  color: #0F172A;
+  margin-bottom: 8px;
+}
+
+.tf-price-sub {
+  display: block;
+  font-size: 12px;
+  color: #94A3B8;
+}
+
+.tf-price-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 25px;
+}
+
+.tps-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 15px;
+  color: #475569;
+}
+
+.tps-row span:last-child {
+  font-weight: 600;
+  color: #0F172A;
+}
+
+.tf-book-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 16px;
+  border-radius: 8px;
+  background-color: #FF6B35;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 12px;
+}
+
+.tf-book-btn:hover:not(:disabled) {
+  background-color: #E85A2A;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255, 107, 53, 0.4);
+}
+
+.tf-book-btn.is-confirmed {
+  background-color: #059669;
+  cursor: default;
+}
+
+.tf-book-btn.is-confirmed:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.tf-book-hint {
+  font-size: 12px;
+  color: #64748B;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.tf-need-help {
+  background-color: #F8FAFC;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.tf-phone-link {
+  display: inline-block;
+  font-size: 18px;
+  font-weight: 700;
+  color: #3B82F6;
+  text-decoration: none;
+  margin-top: 5px;
+}
+
+/* FOOTER */
+.tf-footer {
+  text-align: center;
+  padding: 40px 20px;
+  color: #94A3B8;
+  font-size: 14px;
+}
+
+/* ANIMATIONS & STATES */
+.animate-up {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.proposal-loader, .proposal-not-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+  background-color: #F4F5F7;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(15, 23, 42, 0.1);
+  border-radius: 50%;
+  border-top-color: #0F172A;
+  animation: spin 1s ease-in-out infinite;
+  margin-bottom: 20px;
+}
+
+.spinner.small {
+  width: 20px;
+  height: 20px;
+  border-width: 2px;
+  border-top-color: white;
+  border-color: rgba(255,255,255,0.3) rgba(255,255,255,0.3) white rgba(255,255,255,0.3);
+  margin-bottom: 0;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* RESPONSIVE */
+@media (max-width: 992px) {
+  .tf-main-layout {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .tf-sidebar-col {
+    position: static;
+    order: -1; /* Move pricing above content on mobile */
+  }
+
+  .tf-hero {
+    height: 300px;
+    margin-bottom: -30px;
+  }
+  
+  .tf-hero-content {
+    padding-bottom: 60px;
+  }
+}
+
+@media (max-width: 600px) {
+  .tf-tabs {
+    flex-wrap: wrap;
+  }
+  
+  .tf-tab {
+    flex: 1 1 100%;
+  }
+
+  .tf-day-card-v2 {
+    flex-direction: column;
+  }
+  
+  .tf-day-image-side {
+    width: 100%;
+    min-width: 100%;
+    height: 200px;
+  }
+
+  .tf-day-image-side img {
+    position: static;
+  }
+
+  .tf-day-info-side {
+    padding: 20px;
+  }
+
+  .tf-module {
+    flex-direction: column;
+  }
+  
+  .tf-mod-icon {
+    top: 20px;
+  }
+}

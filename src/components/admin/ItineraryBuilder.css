@@ -1,0 +1,175 @@
+.itin-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 25px;
+}
+
+.itin-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  border: 1px solid #E2E8F0;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+}
+
+.itin-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+}
+
+.itin-card-img-wrapper {
+  position: relative;
+  height: 180px;
+  background-color: #F1F5F9;
+}
+
+.itin-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.itin-card-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+}
+
+.itin-card-actions-top {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+}
+
+.itin-action-icon {
+  background: white;
+  border: none;
+  border-radius: 8px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  transition: all 0.2s ease;
+}
+
+.itin-action-icon:hover {
+  transform: scale(1.05);
+}
+
+.itin-action-icon.edit { color: #3B82F6; }
+.itin-action-icon.delete { color: #EF4444; }
+
+.itin-card-body {
+  padding: 20px;
+  flex: 1;
+}
+
+.itin-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.itin-status-badge.confirmed {
+  background-color: #D1FAE5;
+  color: #065F46;
+}
+
+.itin-status-badge.pending {
+  background-color: #FEF3C7;
+  color: #92400E;
+}
+
+.itin-client-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0F172A;
+  margin-bottom: 4px;
+}
+
+.itin-pkg-title {
+  font-size: 14px;
+  color: #475569;
+  margin-bottom: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.itin-meta {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-size: 13px;
+  color: #64748B;
+  font-weight: 600;
+}
+
+.itin-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.itin-card-footer {
+  padding: 15px 20px;
+  border-top: 1px solid #E2E8F0;
+  display: flex;
+  gap: 12px;
+  background-color: #F8FAFC;
+}
+
+.itin-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 0;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.itin-btn.view {
+  background-color: white;
+  border-color: #CBD5E1;
+  color: #334155;
+}
+
+.itin-btn.view:hover {
+  border-color: #94A3B8;
+  color: #0F172A;
+  background-color: #F1F5F9;
+}
+
+.itin-btn.copy {
+  background-color: #FF6B35;
+  color: white;
+}
+
+.itin-btn.copy:hover {
+  background-color: #E85A2A;
+  transform: translateY(-1px);
+}

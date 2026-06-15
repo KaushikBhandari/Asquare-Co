@@ -20,6 +20,7 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
 import CookiePolicy from './pages/CookiePolicy';
 import ContactUs from './pages/ContactUs';
+import ProposalViewer from './pages/ProposalViewer';
 import { Toaster } from 'react-hot-toast';
 import './styles/global.css';
 
@@ -46,6 +47,7 @@ export default function App() {
                 <Route path="/terms-of-service" element={<TermsOfService />} />
                 <Route path="/cookie-policy" element={<CookiePolicy />} />
                 <Route path="/contact" element={<ContactUs />} />
+                <Route path="/proposal/:id" element={<ProposalViewer />} />
               </Routes>
             </main>
             <TaxiWidget />
