@@ -22,6 +22,7 @@ import CookiePolicy from './pages/CookiePolicy';
 import ContactUs from './pages/ContactUs';
 import ProposalViewer from './pages/ProposalViewer';
 import { Toaster } from 'react-hot-toast';
+import ScrollToTop from './components/ScrollToTop';
 import './styles/global.css';
 
 export default function App() {
@@ -29,6 +30,7 @@ export default function App() {
     <AuthProvider>
       <BookingProvider>
         <BrowserRouter>
+          <ScrollToTop />
           {/* AuthGuard handles sign-in wall + modal internally */}
           <AuthGuard>
             <Navbar />
