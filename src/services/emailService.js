@@ -10,10 +10,10 @@
 // ══════════════════════════════════════════════════════════════
 
 // ⚠️ REPLACE THESE WITH YOUR EMAILJS VALUES ⚠️
-const EMAILJS_PUBLIC_KEY  = 'GkyLDyJXUEa5DAbb9';       // Account → API Keys
-const EMAILJS_SERVICE_ID  = 'service_nbyger4';       // Email Services → Service ID
-const EMAILJS_CUSTOMER_TEMPLATE = 'template_48i04x7'; // Template 1 ID
-const EMAILJS_ADMIN_TEMPLATE    = 'template_htz8aei';    // Template 2 ID
+const EMAILJS_PUBLIC_KEY = 'BU9lxDDeG0_VpZrKk';       // Account → API Keys
+const EMAILJS_SERVICE_ID = 'service_2exoooi';       // Email Services → Service ID
+const EMAILJS_CUSTOMER_TEMPLATE = 'template_af3445o'; // Template 1 ID
+const EMAILJS_ADMIN_TEMPLATE = 'template_vzli8c5';    // Template 2 ID
 
 // ── Load EmailJS from CDN ──────────────────────────────────────
 const loadEmailJS = () => new Promise((resolve) => {
@@ -32,19 +32,19 @@ export const sendCustomerConfirmation = async (enquiry) => {
   try {
     const ejs = await loadEmailJS();
     await ejs.send(EMAILJS_SERVICE_ID, EMAILJS_CUSTOMER_TEMPLATE, {
-      to_name:       enquiry.firstName || enquiry.customerName,
-      to_email:      enquiry.email,
-      ref_id:        enquiry.id || ('WL' + Date.now()),
-      package_name:  enquiry.selectedPackage,
-      destinations:  enquiry.packageDestinations,
-      duration:      enquiry.packageDuration,
-      travelers:     enquiry.travelers,
-      departure:     enquiry.departureDate || 'Flexible',
-      trip_type:     enquiry.tripType,
-      budget:        enquiry.budget,
-      est_price:     `$${Number(enquiry.packagePrice || 0).toLocaleString()}`,
-      message:       enquiry.customerMessage || 'No special requests',
-      company_name:  'Asquaretravelgoa Tours & Travels',
+      to_name: enquiry.firstName || enquiry.customerName,
+      to_email: enquiry.email,
+      ref_id: enquiry.id || ('WL' + Date.now()),
+      package_name: enquiry.selectedPackage,
+      destinations: enquiry.packageDestinations,
+      duration: enquiry.packageDuration,
+      travelers: enquiry.travelers,
+      departure: enquiry.departureDate || 'Flexible',
+      trip_type: enquiry.tripType,
+      budget: enquiry.budget,
+      est_price: `$${Number(enquiry.packagePrice || 0).toLocaleString()}`,
+      message: enquiry.customerMessage || 'No special requests',
+      company_name: 'Asquaretravelgoa Tours & Travels',
       company_email: 'info@asquaretravelgoa.com',  // ← your company email
       company_phone: '+91 95293 38747',     // ← your phone
     });
@@ -61,24 +61,24 @@ export const sendAdminNotification = async (enquiry) => {
   try {
     const ejs = await loadEmailJS();
     await ejs.send(EMAILJS_SERVICE_ID, EMAILJS_ADMIN_TEMPLATE, {
-      ref_id:          enquiry.id || ('WL' + Date.now()),
-      customer_name:   enquiry.customerName,
-      customer_email:  enquiry.email,
-      customer_phone:  enquiry.phone,
-      customer_city:   enquiry.city || '—',
-      package_name:    enquiry.selectedPackage,
-      destinations:    enquiry.packageDestinations,
-      duration:        enquiry.packageDuration,
-      travelers:       enquiry.travelers,
-      departure:       enquiry.departureDate || 'Flexible',
-      return_date:     enquiry.returnDate || 'Flexible',
-      trip_type:       enquiry.tripType,
-      room_type:       enquiry.roomType,
-      budget:          enquiry.budget,
-      est_price:       `$${Number(enquiry.packagePrice || 0).toLocaleString()}`,
+      ref_id: enquiry.id || ('WL' + Date.now()),
+      customer_name: enquiry.customerName,
+      customer_email: enquiry.email,
+      customer_phone: enquiry.phone,
+      customer_city: enquiry.city || '—',
+      package_name: enquiry.selectedPackage,
+      destinations: enquiry.packageDestinations,
+      duration: enquiry.packageDuration,
+      travelers: enquiry.travelers,
+      departure: enquiry.departureDate || 'Flexible',
+      return_date: enquiry.returnDate || 'Flexible',
+      trip_type: enquiry.tripType,
+      room_type: enquiry.roomType,
+      budget: enquiry.budget,
+      est_price: `$${Number(enquiry.packagePrice || 0).toLocaleString()}`,
       customer_message: enquiry.customerMessage || 'No special requests',
-      submitted_at:    new Date().toLocaleString('en-IN'),
-      admin_email:     'info@asquaretravelgoa.com', // ← your admin email
+      submitted_at: new Date().toLocaleString('en-IN'),
+      admin_email: 'info@asquaretravelgoa.com', // ← your admin email
     });
     console.log('✅ Admin notification sent');
     return true;

@@ -12,6 +12,7 @@ import {
 import toast from 'react-hot-toast';
 import './BookingPage.css';
 import { FaWhatsapp } from "react-icons/fa";
+import CustomTripForm from '../components/CustomTripForm';
 
 const STEPS = [
   { label: 'Choose Trip', icon: '🌍' },
@@ -277,8 +278,13 @@ try {
                   )
                 })}
               </div>
+
+              <div style={{ marginTop: '40px' }}>
+                <CustomTripForm />
+              </div>
+
               <p style={{textAlign:'center', fontSize:13, color:'var(--ink-soft)', marginTop:16}}>
-                Tap any {activeTab === 'destinations' ? 'destination' : 'package'} to continue
+                Tap any {activeTab === 'destinations' ? 'destination' : 'package'} or request a custom trip to continue
               </p>
             </div>
           )}
